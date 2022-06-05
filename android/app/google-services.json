@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1076641138474",
+    "project_id": "askinusthb",
+    "storage_bucket": "askinusthb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076641138474:android:9d6e7c663bc71d16d88053",
+        "android_client_info": {
+          "package_name": "com.example.ask_in_usthb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076641138474-iqbpkenscltf09lfmq6hhq6fa3vvubl7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCATSsCXySulKtKDEZNxX7oKybZma32Q04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076641138474-iqbpkenscltf09lfmq6hhq6fa3vvubl7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
