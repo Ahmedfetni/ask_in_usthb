@@ -4,6 +4,7 @@ import '../widgets/connecter_ou_inscrire.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'page_profil.dart';
 
 class Navigation extends StatefulWidget {
   Navigation({
@@ -39,14 +40,23 @@ class _NavigationState extends State<Navigation> {
                               border: Border.all(
                                   width: 2, color: Colors.blueAccent),
                               shape: BoxShape.circle),
-                          child: CircleAvatar(
-                            minRadius: MediaQuery.of(context).size.width * 0.1,
-                            backgroundColor: Colors.yellowAccent,
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                "Mohammed",
-                                style: TextStyle(fontSize: 14),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Profil()));
+                            },
+                            child: CircleAvatar(
+                              minRadius:
+                                  MediaQuery.of(context).size.width * 0.1,
+                              backgroundColor: Colors.yellowAccent,
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Mohammed",
+                                  style: TextStyle(fontSize: 14),
+                                ),
                               ),
                             ),
                           ),

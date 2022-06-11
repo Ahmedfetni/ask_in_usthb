@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
+import 'service_base_de_donnees.dart';
 
 class ServiceAuthentification {
   late final FirebaseAuth _firebaseAuth;
@@ -19,19 +21,29 @@ class ServiceAuthentification {
     }
   }
 
-  Future<String> inscrire(
-      {required String email, required String motDePasse}) async {
+  /* La fonction pour s'inscrire et cree un utilisateur */
+  Future inscrire(
+      {required String email,
+      required String motDePasse,
+      required String nomUtilisateur,
+      required String niveau,
+      required String dateDeNaissance}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      var result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: motDePasse);
-      return "compte créé avec succes";
+      User? user = result.user;
+      if (user != null) {
+        await ServiceBaseDeDonnes(uid: user.uid)
+            .mettreAjourInfo(nomUtilisateur, niveau, dateDeNaissance);
+      }
+      return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        return 'le mot de passe est ters faible ';
+        debugPrint('le mot de passe est ters faible ');
       } else if (e.code == 'email-already-in-use') {
-        return 'cette email existe deja';
+        debugPrint('cette email existe deja');
       }
-      return e.message!;
+      debugPrint(e.message);
     }
   }
 

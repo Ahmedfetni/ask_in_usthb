@@ -11,10 +11,14 @@ import 'services/service_authentification.dart';
 
 /* 
   ); */
-void main() {
+void main() async {
+  // attendre l'intialisation
   WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(const MyApp());
+  //intialisation de la base de donnnees de l'application
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp()); //lancer l'application
 }
 
 class MyApp extends StatefulWidget {
@@ -25,12 +29,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  _initialize() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
-
   bool utilisateurConnecter = true;
   int indexDesEcrant = 0;
   bool ajouterTagEstAutoFocus = false;
@@ -42,75 +40,63 @@ class _MyAppState extends State<MyApp> {
       PageDesFavories(utilisateurConnecter: utilisateurConnecter),
       PageNotification(utilisateurConnecter: utilisateurConnecter),
     ];
-    return FutureBuilder(
-      future: _initialize(),
-      builder: ((context, snapshot) {
-        if (snapshot.hasError) {
-          //TODO traitement d'erreur
-          return const Scaffold(
-            body: Text(" Redemarer l'application "),
-          );
-        }
-        /* Dans le cas ou l'intiialisation termine sans erreurs  */
-        if (snapshot.connectionState == ConnectionState.done) {
-          return MultiProvider(
-            providers: [
-              Provider<ServiceAuthentification>(
-                  create: ((context) => ServiceAuthentification())),
-              StreamProvider(
-                create: (context) =>
-                    context.read<ServiceAuthentification>().authStateChanges,
-                initialData: null,
-              )
-            ],
-            child: MaterialApp(
-                title: 'Flutter Demo',
-                theme: ThemeData(
-                  primarySwatch: Colors.lightBlue,
+    return MultiProvider(
+      /* Des informations partager par toute l'application  */
+      providers: [
+        Provider<ServiceAuthentification>(
+            //Pour cree un compte ou bien pour connecter
+            create: ((context) => ServiceAuthentification())),
+        StreamProvider(
+          //pour voir l'etat de la connexion
+          create: (context) =>
+              context.read<ServiceAuthentification>().authStateChanges,
+          initialData: null,
+        )
+      ],
+      //L'application
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Ask In USTHB',
+          theme: ThemeData(
+            primarySwatch: Colors.lightBlue,
+          ),
+          home: Scaffold(
+            body: listDesEcrant[
+                indexDesEcrant], //Center(child: CarteEspaceGenieMec()),
+            bottomNavigationBar: CurvedNavigationBar(
+              onTap: ((index) => setState(() {
+                    indexDesEcrant = index;
+                  })),
+              animationDuration: const Duration(milliseconds: 100),
+              buttonBackgroundColor: Colors.lightBlue,
+              backgroundColor: Colors.white,
+              color: Colors.lightBlue,
+              items: const [
+                Icon(
+                  Icons.home,
+                  size: 30,
+                  color: Colors.white,
                 ),
-                home: Scaffold(
-                  body: listDesEcrant[
-                      indexDesEcrant], //Center(child: CarteEspaceGenieMec()),
-                  bottomNavigationBar: CurvedNavigationBar(
-                    onTap: ((index) => setState(() {
-                          indexDesEcrant = index;
-                        })),
-                    animationDuration: const Duration(milliseconds: 300),
-                    buttonBackgroundColor: Colors.lightBlue,
-                    backgroundColor: Colors.white,
-                    color: Colors.lightBlue,
-                    items: const [
-                      Icon(
-                        Icons.home,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      Icon(
-                        Icons.group_outlined,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      Icon(
-                        Icons.bookmark_rounded,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      Icon(
-                        Icons.notifications_rounded,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                )
-                // Connexion(), //pageAccueil(), //const MyHomePage(title: 'Page d\'acceuil'),
+                Icon(
+                  Icons.group_outlined,
+                  size: 30,
+                  color: Colors.white,
                 ),
-          );
-        }
-        return const CircularProgressIndicator();
-      }),
+                Icon(
+                  Icons.bookmark_rounded,
+                  size: 30,
+                  color: Colors.white,
+                ),
+                Icon(
+                  Icons.notifications_rounded,
+                  size: 30,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          )
+          // Connexion(), //pageAccueil(), //const MyHomePage(title: 'Page d\'acceuil'),
+          ),
     );
-
-    /* */
   }
 }

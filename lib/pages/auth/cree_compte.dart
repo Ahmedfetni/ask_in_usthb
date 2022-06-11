@@ -2,9 +2,9 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../../services/service_authentification.dart';
 import 'package:provider/provider.dart';
+
+import '../../services/service_authentification.dart';
 
 class CrierCompte extends StatefulWidget {
   const CrierCompte({Key? key}) : super(key: key);
@@ -22,6 +22,7 @@ class _CrierCompteState extends State<CrierCompte> {
 
   @override
   void initState() {
+    dateDeNaissance = "";
     niveau = 'L1';
     super.initState();
   }
@@ -317,6 +318,11 @@ class _CrierCompteState extends State<CrierCompte> {
                       dateDeNaissance = formatDeLaDate.format(newValue!);
                     }),
                   },
+                  onChanged: (value) {
+                    setState(() {
+                      dateDeNaissance = formatDeLaDate.format(value!);
+                    });
+                  },
                   validator: (val) {
                     if (DateTime.now().difference(val!).inDays / 365 < 16) {
                       return "vous devez être plus que 16 ans ";
@@ -389,14 +395,25 @@ class _CrierCompteState extends State<CrierCompte> {
                       left: MediaQuery.of(context).size.width * 0.6),
                   padding: const EdgeInsets.all(8),
                   child: TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
+                        debugPrint(
+                            " la date de naissance est  $dateDeNaissance");
+
                         return;
                       }
+
                       context
                           .read<ServiceAuthentification>()
-                          .inscrire(email: email, motDePasse: motDePasse)
+                          .inscrire(
+                              email: email,
+                              motDePasse: motDePasse,
+                              nomUtilisateur: nomUtilisateur,
+                              niveau: niveau!,
+                              dateDeNaissance: dateDeNaissance)
                           .then((value) => Navigator.pop(context));
+                      /*(value) => Navigator.pop(context)); 
+                      */
                       /*ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Login avec succees")));*/
                     },

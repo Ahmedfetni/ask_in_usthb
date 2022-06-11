@@ -2,6 +2,7 @@ import '../widgets/inputs/ajouter_une_question.dart';
 import '../widgets/list_des_cartes_questions.dart';
 import '../secondaires/navigation.dart';
 import 'package:flutter/material.dart';
+import '../secondaires/rechercher_par_tag.dart';
 
 // ignore: camel_case_types
 class PageAccueil extends StatelessWidget {
@@ -17,6 +18,21 @@ class PageAccueil extends StatelessWidget {
           "Page D'Accueil",
           style: TextStyle(color: Colors.white),
         ),
+        /* Le boutton de recherche  */
+        actions: [
+          TextButton.icon(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: RecherchParTag(),
+                );
+              },
+              icon: const Icon(
+                Icons.search_rounded,
+                color: Colors.white,
+              ),
+              label: const Text("")),
+        ],
       ),
       body: Stack(
         children: [
@@ -38,11 +54,11 @@ class PageAccueil extends StatelessWidget {
                     barrierDismissible: true,
                   );
                 },
+                elevation: 5,
                 child: const Icon(
                   Icons.question_mark_rounded,
                   color: Colors.white,
                 ),
-                elevation: 5,
               ),
             ),
           ),

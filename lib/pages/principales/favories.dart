@@ -1,6 +1,6 @@
 import '../widgets/connecter_ou_inscrire.dart';
 import '../widgets/list_des_cartes_questions.dart';
-import '../../models/question.dart';
+//import '../../models/question.dart';
 import 'package:flutter/material.dart';
 
 class PageDesFavories extends StatefulWidget {
@@ -15,8 +15,14 @@ class PageDesFavories extends StatefulWidget {
 class _PageDesFavoriesState extends State<PageDesFavories> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: widget.utilisateurConnecter
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Favories",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      body: widget.utilisateurConnecter
           ? ListDesCartesQuestions()
           : const Center(
               child: ConnecterOuInscrire(),
