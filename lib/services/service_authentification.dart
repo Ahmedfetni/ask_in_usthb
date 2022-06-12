@@ -15,8 +15,14 @@ class ServiceAuthentification {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: motDePasse);
-      return "Connexion";
+
+      return "Connexion avec succesé";
     } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return "Utilisateur n'est existe pas";
+      } else if (e.code == 'wrong-password') {
+        return "Mot de passe icorrect";
+      }
       return e.message!;
     }
   }

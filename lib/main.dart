@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
     final listDesEcrant = [
       PageAccueil(),
       ListDesEspaces(utilisateurConnecter: utilisateurConnecter),
-      PageDesFavories(utilisateurConnecter: utilisateurConnecter),
+      PageDesFavories(),
       PageNotification(utilisateurConnecter: utilisateurConnecter),
     ];
     return MultiProvider(

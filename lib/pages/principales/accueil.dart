@@ -13,10 +13,11 @@ class PageAccueil extends StatelessWidget {
     return Scaffold(
       drawer: Navigation(),
       appBar: AppBar(
+        centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           "Page D'Accueil",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         /* Le boutton de recherche  */
         actions: [
@@ -49,7 +50,7 @@ class PageAccueil extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16)),
                       scrollable: true,
-                      content: AjouterUneQuestion(),
+                      content: AjouterUneQuestion(context: context),
                     ),
                     barrierDismissible: true,
                   );

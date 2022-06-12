@@ -84,7 +84,7 @@ class _ConnexionState extends State<Connexion> {
         color: Colors.lightBlue[200],
       ),
     );
-
+    bool loading = false;
     return Scaffold(
       appBar: AppBar(
           title: const Text(
@@ -100,99 +100,113 @@ class _ConnexionState extends State<Connexion> {
                 color: Colors.white,
               ),
               label: const Text(""))),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-          child: Form(
-            key: formKey,
-            child: ListView(
-              children: [
-                /* ********************************Choisir l'email******************************** */
-                TextFormField(
-                  decoration: emailDecoration,
-                  onChanged: (val) => {
-                    setState(
-                      () {
-                        email = val;
-                      },
-                    )
-                  },
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return "vous dever introduire une adresse email";
-                    } else if (!EmailValidator.validate(val)) {
-                      return "Introduire une adresse email valid";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                /* *************** Espace vide ***************** */
-                _espaceVide(),
+      body: loading
+          ? CircularProgressIndicator()
+          : Center(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                child: Form(
+                  key: formKey,
+                  child: ListView(
+                    children: [
+                      /* ********************************Choisir l'email******************************** */
+                      TextFormField(
+                        decoration: emailDecoration,
+                        onChanged: (val) => {
+                          setState(
+                            () {
+                              email = val;
+                            },
+                          )
+                        },
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return "vous dever introduire une adresse email";
+                          } else if (!EmailValidator.validate(val)) {
+                            return "Introduire une adresse email valid";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      /* *************** Espace vide ***************** */
+                      _espaceVide(),
 
-                /* ********************************  choisir le mot de passe *********************************/
-                TextFormField(
-                  decoration: motDePasseDecoration,
-                  obscureText:
-                      textInvisible, //pour rendre le mot de passe visible ou invisble
-                  onChanged: (val) => {
-                    setState(
-                      () {
-                        motDePasse = val;
-                      },
-                    ),
-                  },
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return "Introduire une adresse email valid";
-                      //} //else if (val.length < 8) {
-                      //return "Votre mot de passe dois etre au moins 8 charachteres";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
+                      /* ********************************  choisir le mot de passe *********************************/
+                      TextFormField(
+                        decoration: motDePasseDecoration,
+                        obscureText:
+                            textInvisible, //pour rendre le mot de passe visible ou invisble
+                        onChanged: (val) => {
+                          setState(
+                            () {
+                              motDePasse = val;
+                            },
+                          ),
+                        },
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return "Introduire une adresse email valid";
+                            //} //else if (val.length < 8) {
+                            //return "Votre mot de passe dois etre au moins 8 charachteres";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
 
-                /* *************** Espace vide ***************** */
-                _espaceVide(),
-                /* ************************************ Bouton pour le submit ************************************ */
-                Container(
-                  margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.6),
-                  padding: EdgeInsets.all(8),
-                  child: TextButton(
-                    onPressed: () async {
-                      if (!formKey.currentState!.validate()) {
-                        return;
-                      } else {
-                        /*
+                      /* *************** Espace vide ***************** */
+                      _espaceVide(),
+                      /* ************************************ Bouton pour le submit ************************************ */
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.6),
+                        padding: const EdgeInsets.all(8),
+                        child: TextButton(
+                          onPressed: () async {
+                            if (!formKey.currentState!.validate()) {
+                              return;
+                            } else {
+                              /*
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Login avec succees")));*/
-                        context
-                            .read<ServiceAuthentification>()
-                            .connexion(email: email, motDePasse: motDePasse)
-                            .then((value) => Navigator.pop(context));
-                      }
-                    },
-                    style: TextButton.styleFrom(
-                      elevation: 2,
-                      backgroundColor: Colors.lightBlue.shade300,
-                    ),
-                    child: const Text(
-                      "Connexion",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
+                              setState(() {
+                                loading = true;
+                              });
+                              context
+                                  .read<ServiceAuthentification>()
+                                  .connexion(
+                                      email: email, motDePasse: motDePasse)
+                                  .then((value) {
+                                if (value == "Connexion avec succesé") {
+                                  Navigator.pop(context);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(value)));
+                                }
+                              });
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            elevation: 2,
+                            backgroundColor: Colors.white,
+                          ),
+                          child: const Text(
+                            "Connexion",
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.lightBlue,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 

@@ -1,5 +1,6 @@
 import '../widgets/connecter_ou_inscrire.dart';
 import '../../models/espace.dart';
+import 'package:provider/provider.dart';
 import '../widgets/cartes/carte_espace_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,13 @@ class ListDesEspaces extends StatelessWidget {
   Widget build(BuildContext context) {
     final elements = const [];
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "Espaces",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
       body: SafeArea(
         child: elements.isNotEmpty
             ? ListView(

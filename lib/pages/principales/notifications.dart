@@ -13,8 +13,9 @@ class PageNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          centerTitle: true,
           backgroundColor: Colors.lightBlue.shade500,
-          title: const Text("Les notfications",
+          title: const Text("Notfications",
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white))),
       body: utilisateurConnecter

@@ -1,3 +1,5 @@
+import 'package:ask_in_usthb/pages/secondaires/question_details.dart';
+
 import '../../../models/question.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -46,12 +48,12 @@ class _CarteQuestionState extends State<CarteQuestion> {
               children: [
                 ListTile(
                   onTap: () {
-                    /*Navigator.push(
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: ((context) => QuestionDetail(
                                   question: widget.question,
-                                ))));*/
+                                ))));
                   },
                   leading: Container(
                     decoration: BoxDecoration(
@@ -83,7 +85,7 @@ class _CarteQuestionState extends State<CarteQuestion> {
                       Text(
                         //overflow: TextOverflow.ellipsis,
                         widget.question.getCorp,
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
@@ -105,8 +107,7 @@ class _CarteQuestionState extends State<CarteQuestion> {
                         "${widget.question.vote}",
                       ),
                       Text("${widget.question.getReponses.length} Réponse"),
-                      Text(DateFormat("yyyy-MM-dd – kk:mm")
-                          .format(widget.question.getDate)),
+                      Text(widget.question.getDate),
                     ],
                   ),
                 ),

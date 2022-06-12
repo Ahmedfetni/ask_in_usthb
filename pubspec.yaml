@@ -41,6 +41,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.0
   firebase_auth: ^3.3.19
   cloud_firestore: ^3.1.17
+  cool_dropdown: ^1.4.1
 
 dev_dependencies:
   flutter_test:

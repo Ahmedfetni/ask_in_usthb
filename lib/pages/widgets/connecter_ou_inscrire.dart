@@ -14,21 +14,29 @@ class ConnecterOuInscrire extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton(
+            TextButton(
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => Connexion())));
               },
+              style: TextButton.styleFrom(
+                elevation: 4,
+                backgroundColor: Colors.white,
+              ),
               child: const Text(
                 "Connexion",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            ElevatedButton(
+            TextButton(
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: ((context) => CrierCompte())));
               },
+              style: TextButton.styleFrom(
+                elevation: 4,
+                backgroundColor: Colors.white,
+              ),
               child: const Text(
                 "Inscrire",
                 style: TextStyle(fontWeight: FontWeight.bold),
