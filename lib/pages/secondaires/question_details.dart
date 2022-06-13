@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../models/question.dart';
 import '../../models/tag.dart';
 import '../../models/reponse_degre1.dart';
@@ -6,6 +10,9 @@ import '../widgets/cartes/carte_reponse1.dart';
 import '../widgets/cartes/puce_tag.dart';
 import '../widgets/inputs/repondre_a_reponse.dart';
 import 'package:flutter/material.dart';
+import '../../services/service_base_de_donnees.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class QuestionDetail extends StatefulWidget {
   final Question question;
@@ -220,8 +227,8 @@ class _QuestionDetailState extends State<QuestionDetail> {
                       ),
                       //Pour sauvgarder une question
                       TextButton(
-                        onPressed: () {
-                          //TODO ajouter la fonctionalite
+                        onPressed: () async {
+                          //TODO Bookmark a question
                         },
                         child: const Icon(Icons.bookmark_add_rounded),
                       ),
@@ -241,8 +248,23 @@ class _QuestionDetailState extends State<QuestionDetail> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16.0, vertical: 8),
                     child: TextField(
-                      onSubmitted: (value) {
+                      onSubmitted: (value) async {
                         //TODO Ajouter une reponse de degre 01
+                        final uid =
+                            Provider.of<User?>(context, listen: false)?.uid;
+                        if (uid == null) {
+                          debugPrint("the uid of the user is null ");
+                        } else {
+                          debugPrint("the user is not null");
+
+                          /*sleep(const Duration(milliseconds: 100));*/
+
+                          await ServiceBaseDeDonnes(uid: uid)
+                              .ajouterUneRponse1(widget.question.getId, value);
+                          setState(() {
+                            ajouterUneReponseDegre1 = false;
+                          });
+                        }
                       },
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(

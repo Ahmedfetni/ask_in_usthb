@@ -49,6 +49,7 @@ class Question {
 
   static Question questionFromSnapshot(DocumentSnapshot snapshot) {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+    String id = snapshot.id;
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     //Cree la list des tag
     var listDesTag = <Tag>[];
@@ -59,7 +60,7 @@ class Question {
       }
     }
     return Question(
-      id: data.containsKey('id') ? data['id'] : '',
+      id: id,
       titre: data.containsKey('titre') ? data['titre'] : 'titre par defaut',
       corp: data.containsKey('corp') ? data['corp'] : "",
       nomUtilisateur:
@@ -74,6 +75,7 @@ class Question {
     );
   }
 
+  String get getId => id;
   String get getTitre => titre;
   String get getCorp => corp;
   String get getNomUtilisateur => nomUtilisateur;

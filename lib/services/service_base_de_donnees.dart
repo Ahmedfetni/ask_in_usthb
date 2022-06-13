@@ -33,6 +33,29 @@ class ServiceBaseDeDonnes {
     });
   }
 
+  Future ajouterUneRponse1(
+    String idQuestion,
+    String text,
+  ) async {
+    final collectionDesRponse1 =
+        collectionQuestion.doc(idQuestion).collection("reponses");
+    try {
+      String nomUtilisateur = await getNomUtilisateur(uid!);
+      await collectionDesRponse1.add({
+        'uid': uid,
+        'nomutilisateur': nomUtilisateur,
+        'text': text,
+        'vote': 0,
+        'date': FieldValue.serverTimestamp(),
+      }).then((value) {
+        return value;
+      });
+    } on FirebaseException catch (e) {
+      // Caught an exception from Firebase.
+      print("Failed with error '${e.code}': ${e.message}");
+    }
+  }
+
   Future sauvgarderQuestion(
       String? titre, String? corp, List<String> tags, String espace) async {
     try {
