@@ -10,7 +10,7 @@ class ServiceBaseDeDonnes {
       FirebaseFirestore.instance.collection("utilisateurs");
   final CollectionReference collectionQuestion =
       FirebaseFirestore.instance.collection("Questions");
-
+  //Ajouter un utilisateur
   Future mettreAjourInfo(
     String nomUtilisateur,
     String niveau,
@@ -23,6 +23,7 @@ class ServiceBaseDeDonnes {
     });
   }
 
+  //pour recevoire le nom de l'utilisateur
   Future<String> getNomUtilisateur(String uid) async {
     return await FirebaseFirestore.instance
         .collection("utilisateurs")
@@ -33,6 +34,29 @@ class ServiceBaseDeDonnes {
     });
   }
 
+  Future mettreAjourVote(String idQuestion, int vote) async {
+    //TODO add a test so the user can not vote twice on the same question like a +2 or something
+    try {
+      await collectionQuestion
+          .doc(idQuestion)
+          .update({"vote": vote}).then((value) {
+        return value;
+      });
+    } on FirebaseException catch (e) {
+      debugPrint("Failed with error '${e.code}': ${e.message}");
+    }
+  }
+
+  //Ajouter une question au favories
+  Future ajouterUneQuestionAuFavories(String idQuestion) async {
+    await collectionUtilisateur.doc(uid).update({
+      //TODO Ajouter une question au favories
+    }).then((value) {
+      return value;
+    });
+  }
+
+  //pour ajouter une reponse
   Future ajouterUneRponse1(
     String idQuestion,
     String text,
@@ -52,15 +76,16 @@ class ServiceBaseDeDonnes {
       });
     } on FirebaseException catch (e) {
       // Caught an exception from Firebase.
-      print("Failed with error '${e.code}': ${e.message}");
+      debugPrint("Failed with error '${e.code}': ${e.message}");
     }
   }
 
+  // TITLE pour ajouter une sauvgrader une question
   Future sauvgarderQuestion(
       String? titre, String? corp, List<String> tags, String espace) async {
     try {
       String nomutilisateur = await getNomUtilisateur(uid!);
-      final result = await collectionQuestion.add({
+      await collectionQuestion.add({
         "titre": titre,
         "corp": corp,
         "date": FieldValue.serverTimestamp(),

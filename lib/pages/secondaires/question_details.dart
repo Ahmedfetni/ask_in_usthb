@@ -158,7 +158,7 @@ class _QuestionDetailState extends State<QuestionDetail> {
                       ),
                       //vote +
                       TextButton.icon(
-                          onPressed: () {
+                          onPressed: () async {
                             setState(() {
                               if (!plusCliquer) {
                                 vote++;
@@ -183,12 +183,16 @@ class _QuestionDetailState extends State<QuestionDetail> {
                               }
                               plusCliquer = !plusCliquer;
                             });
+                            final uid =
+                                Provider.of<User?>(context, listen: false)?.uid;
+                            await ServiceBaseDeDonnes(uid: uid)
+                                .mettreAjourVote(widget.question.getId, vote);
                           },
                           icon: iconVotePlus,
                           label: const Text("")),
                       //vote -
                       TextButton.icon(
-                          onPressed: () {
+                          onPressed: () async {
                             setState(() {
                               if (!moinsCliquer) {
                                 vote--;
@@ -213,6 +217,10 @@ class _QuestionDetailState extends State<QuestionDetail> {
                               }
                               moinsCliquer = !moinsCliquer;
                             });
+                            final uid =
+                                Provider.of<User?>(context, listen: false)?.uid;
+                            await ServiceBaseDeDonnes(uid: uid)
+                                .mettreAjourVote(widget.question.getId, vote);
                           },
                           icon: iconVoteMoins,
                           label: const Text("")),
