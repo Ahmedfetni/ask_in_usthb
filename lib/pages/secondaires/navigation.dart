@@ -38,7 +38,7 @@ class _NavigationState extends State<Navigation> {
                         child: Container(
                           decoration: BoxDecoration(
                               border: Border.all(
-                                  width: 2, color: Colors.blueAccent),
+                                  width: 4, color: Colors.blueAccent),
                               shape: BoxShape.circle),
                           child: InkWell(
                             onTap: () {
@@ -55,7 +55,9 @@ class _NavigationState extends State<Navigation> {
                                 padding: EdgeInsets.all(8.0),
                                 child: Text(
                                   "Mohammed",
-                                  style: TextStyle(fontSize: 14),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -69,17 +71,20 @@ class _NavigationState extends State<Navigation> {
                     Container(
                       height: 3,
                       color: Colors.blue,
-                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
                     ),
                     const SizedBox(
                       height: 30,
                     ),
                     ListTile(
                       leading: const Icon(
-                        Icons.settings_rounded,
-                        color: Colors.black,
+                        Icons.info_rounded,
+                        color: Colors.blue,
                       ),
-                      title: Text("Parametres"),
+                      title: const Text(
+                        "À Props",
+                        style: TextStyle(color: Colors.blue, fontSize: 18),
+                      ),
                       onTap: () {},
                     ),
                     const SizedBox(
@@ -88,9 +93,12 @@ class _NavigationState extends State<Navigation> {
                     ListTile(
                       leading: const Icon(
                         Icons.logout_rounded,
-                        color: Colors.black,
+                        color: Colors.blue,
                       ),
-                      title: Text("Deconnexion"),
+                      title: const Text(
+                        "Deconnexion",
+                        style: TextStyle(color: Colors.blue, fontSize: 18),
+                      ),
                       onTap: () {
                         context.read<ServiceAuthentification>().deconnexion();
                       },
