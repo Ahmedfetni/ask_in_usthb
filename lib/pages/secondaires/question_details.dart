@@ -1,5 +1,6 @@
-import 'dart:io';
+//import 'dart:io';
 
+import 'package:ask_in_usthb/pages/widgets/cartes/grandeCarteQuestion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/question.dart';
@@ -24,6 +25,10 @@ class QuestionDetail extends StatefulWidget {
 }
 
 class _QuestionDetailState extends State<QuestionDetail> {
+  final sliverListCasErreur = UniqueKey();
+  final sliverListCasLoading = UniqueKey();
+  final sliverListCasResultat = UniqueKey();
+
   List<bool> rependreVisible = [];
   late bool plusCliquer;
   late bool moinsCliquer;
@@ -69,300 +74,110 @@ class _QuestionDetailState extends State<QuestionDetail> {
           },
         ),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(
-                          style: BorderStyle.solid,
-                          color: Colors.blue,
-                          width: 4),
-                    ),
-                    margin: const EdgeInsets.only(bottom: 10, top: 20),
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.yellowAccent,
-                      foregroundColor: Colors.blue,
-                      child: Text(
-                        widget.question.getNomUtilisateur
-                            .substring(0, 2)
-                            .toUpperCase(),
-                      ),
-                    ),
-                  ),
-                ),
-                /* ******************** Titre du question ******************** */
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Wrap(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 30),
+      body: FutureBuilder<QuerySnapshot>(
+        future: getReponse(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return CustomScrollView(
+              key: sliverListCasErreur,
+              slivers: [
+                GrandeCarteQuestion(question: widget.question),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      Center(
                         child: Text(
+                          "Une erreur verfier votre connexion internet ${snapshot.error}",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            color: Colors.redAccent,
                           ),
-                          widget.question.getTitre,
                         ),
                       ),
                     ],
                   ),
-                ),
-                /* ******************** Corp du question ******************** */
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Wrap(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 30),
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          style: const TextStyle(fontSize: 18),
-                          widget.question.getCorp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                /* ******************** Les Tags ******************** */
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Wrap(
-                    direction: Axis.horizontal,
-                    alignment: WrapAlignment.spaceBetween,
-                    crossAxisAlignment: WrapCrossAlignment.start,
-                    children: _listDesPuce(widget.question.getTags),
-                  ),
-                ),
-                /* ******************** Les Buttons ******************** */
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 40,
-                    right: 40,
-                    bottom: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        "$vote",
-                      ),
-                      //vote +
-                      TextButton.icon(
-                          onPressed: () async {
-                            setState(() {
-                              if (!plusCliquer) {
-                                vote++;
-                                iconVotePlus = const Icon(
-                                  Icons.thumb_up_alt_rounded,
-                                  color: Colors.green,
-                                );
-                              } else {
-                                vote--;
-                                iconVotePlus = const Icon(
-                                  Icons.thumb_up_off_alt,
-                                  color: Colors.green,
-                                );
-                              }
-                              if (moinsCliquer) {
-                                vote++;
-                                moinsCliquer = !moinsCliquer;
-                                iconVoteMoins = const Icon(
-                                  Icons.thumb_down_off_alt,
-                                  color: Colors.redAccent,
-                                );
-                              }
-                              plusCliquer = !plusCliquer;
-                            });
-                            final uid =
-                                Provider.of<User?>(context, listen: false)?.uid;
-                            await ServiceBaseDeDonnes(uid: uid)
-                                .mettreAjourVote(widget.question.getId, vote);
-                          },
-                          icon: iconVotePlus,
-                          label: const Text("")),
-                      //vote -
-                      TextButton.icon(
-                          onPressed: () async {
-                            setState(() {
-                              if (!moinsCliquer) {
-                                vote--;
-                                iconVoteMoins = const Icon(
-                                  Icons.thumb_down_alt_rounded,
-                                  color: Colors.redAccent,
-                                );
-                              } else {
-                                vote++;
-                                iconVoteMoins = const Icon(
-                                  Icons.thumb_down_off_alt,
-                                  color: Colors.redAccent,
-                                );
-                              }
-                              if (plusCliquer) {
-                                vote--;
-                                iconVotePlus = const Icon(
-                                  Icons.thumb_up_off_alt,
-                                  color: Colors.green,
-                                );
-                                plusCliquer = !plusCliquer;
-                              }
-                              moinsCliquer = !moinsCliquer;
-                            });
-                            final uid =
-                                Provider.of<User?>(context, listen: false)?.uid;
-                            await ServiceBaseDeDonnes(uid: uid)
-                                .mettreAjourVote(widget.question.getId, vote);
-                          },
-                          icon: iconVoteMoins,
-                          label: const Text("")),
-                      // Pour rependre
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            ajouterUneReponseDegre1 = !ajouterUneReponseDegre1;
-                          });
-                        },
-                        child: const Icon(Icons.reply_rounded),
-                      ),
-                      //Pour sauvgarder une question
-                      TextButton(
-                        onPressed: () async {
-                          //TODO Bookmark a question
-                          //TODO set state icon
-                          setState(() {
-                            iconFavorie = Icons.bookmark_added_rounded;
-                          });
-                          final uid =
-                              Provider.of<User?>(context, listen: false)?.uid;
-                          await ServiceBaseDeDonnes(uid: uid)
-                              .ajouterUneQuestionAuFavories(
-                                  widget.question.getId);
-                        },
-                        child: Icon(
-                          iconFavorie,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  height: 1,
-                  color: Colors.lightBlue,
-                ),
-                /* ************************* Ajouter une reponse  degre 01 **************************/
-                Visibility(
-                  visible: ajouterUneReponseDegre1,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8),
-                    child: TextField(
-                      onSubmitted: (value) async {
-                        final uid =
-                            Provider.of<User?>(context, listen: false)?.uid;
-                        if (uid == null) {
-                          debugPrint("the uid of the user is null ");
-                        } else {
-                          debugPrint("the user is not null");
-
-                          /*sleep(const Duration(milliseconds: 100));*/
-
-                          await ServiceBaseDeDonnes(uid: uid)
-                              .ajouterUneRponse1(widget.question.getId, value);
-                          setState(() {
-                            ajouterUneReponseDegre1 = false;
-                          });
-                        }
-                      },
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                  width: 2, color: Colors.lightBlue.shade100)),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                                width: 1, color: Colors.lightBlue[600]!),
-                          ),
-                          hintText: "Ajouter votre reponse ",
-                          suffixIcon: TextButton.icon(
-                              onPressed: () {
-                                //TODO passe le on submitted
-                              },
-                              icon: const Icon(
-                                Icons.send_rounded,
-                                color: Colors.lightBlue,
-                              ),
-                              label: const Text(""))),
-                    ),
-                  ),
-                ),
+                )
               ],
-            ),
-          ),
-          ..._listDesReponses(widget.question.getReponses),
-        ],
+            );
+          }
+          if (snapshot.hasData ||
+              snapshot.connectionState == ConnectionState.done) {
+            List<ReponseDegre1> li = [];
+            for (var element in snapshot.data!.docs) {
+              li.add(ReponseDegre1.reponseFromSnapshot(element));
+            }
+            return CustomScrollView(
+              key: sliverListCasResultat,
+              slivers: [
+                GrandeCarteQuestion(question: widget.question),
+                //..._listDesReponses(li),
+                SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        childCount: li.length,
+                        (context, index) => CarteReponse(reponse: li[index])))
+              ],
+            );
+          }
+          return CustomScrollView(
+            key: sliverListCasLoading,
+            slivers: [
+              GrandeCarteQuestion(question: widget.question),
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ],
+          );
+        },
       ),
+
+      /*CustomScrollView(
+        slivers: [
+          GrandeCarteQuestion(question: widget.question),
+          creeLesListDesReponse(
+              context), //TODO requperer les reponses a partitre de la base de donnees
+        ],
+      ),*/
     );
   }
 
   /* *************** Pour cree les puces *************** */
-  List<Widget> _listDesPuce(List<Tag>? tags) {
-    if (tags != null) {
-      List<PuceTag> puces = [];
-      for (var i = 0; i < tags.length; i++) {
-        puces.add(PuceTag(tag: tags[i]));
-      }
-      return puces;
-    }
-    return <Widget>[
-      Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        child: const Text("Pas de tag"),
-      )
-    ];
-  }
 
 /* ******** ******** */
-  void _visibiliter(int index) {
-    setState(() {
-      rependreVisible[index] = !rependreVisible[index];
-    });
+
+  /*********************************** recuperer les questions  ********************************/
+  Future<QuerySnapshot> getReponse() async {
+    var collection = FirebaseFirestore.instance
+        .collection("Questions")
+        .doc(widget.question.getId)
+        .collection("reponses");
+    return await collection.get();
   }
 
   /* *************** Pour une list des reponses *************** */
+  //TODO changer  tous cas a un furure builder
+  //creeLesListDesReponse(context) =>
+
   List<SliverList> _listDesReponses(List<ReponseDegre1> li) {
     List<SliverList> liSliver = [];
     int i = 0;
     for (var reponse in li) {
       liSliver.add(SliverList(
-          delegate: SliverChildListDelegate([
-        CarteReponse(reponse: reponse, repondre: _visibiliter, index: i)
-      ])));
-      liSliver.add(SliverList(
+          delegate: SliverChildListDelegate([CarteReponse(reponse: reponse)])));
+      /*liSliver.add(SliverList(
           delegate: SliverChildListDelegate([
         RepondreAUneReponse(
           visible: rependreVisible[i],
           reponse1: reponse,
           index: i,
         )
-      ])));
+      ])));*/
+      //List de reponses a une reponse degre 2
+      //TODO Verfier si les reponse existe a une reponse
       liSliver.add(SliverList(
         delegate: SliverChildBuilderDelegate(
-          childCount: reponse.getReponses.length,
+          childCount: reponse.getReponses.length, //len des reponses
           (context, index) => Container(
-            margin: EdgeInsets.only(left: 30, right: 8),
+            margin: const EdgeInsets.only(left: 30, right: 8),
             padding: const EdgeInsets.all(8.0),
             child: CarteReponse2(reponse: reponse.getReponses[index]),
           ),

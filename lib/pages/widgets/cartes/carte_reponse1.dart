@@ -1,27 +1,30 @@
+import 'package:ask_in_usthb/pages/widgets/inputs/repondre_a_reponse.dart';
+
 import '../../../models/reponse_degre1.dart';
 import 'package:flutter/material.dart';
 
 class CarteReponse extends StatefulWidget {
   final ReponseDegre1 reponse;
-  final Function repondre;
-  final int index;
-  CarteReponse(
-      {Key? key,
-      required this.reponse,
-      required this.repondre,
-      required this.index})
-      : super(key: key);
+  //final Function repondre;
+  //final int index;
+  CarteReponse({
+    Key? key,
+    required this.reponse,
+    //required this.repondre,
+  }) : super(key: key);
 
   @override
   State<CarteReponse> createState() => _CarteReponseState();
 }
 
 class _CarteReponseState extends State<CarteReponse> {
+  bool repondrevisible = false;
+  late Widget repondre;
   @override
   Widget build(BuildContext context) {
     late String utilisateur;
     late String text;
-    late DateTime date;
+    late String date;
 
     @override
     void initState() {
@@ -96,12 +99,22 @@ class _CarteReponseState extends State<CarteReponse> {
                     "${widget.reponse.getDate} par ${widget.reponse.getNomUtilisateur}",
                     style: const TextStyle(color: Colors.lightBlue)),
                 trailing: TextButton.icon(
-                  onPressed: () => widget.repondre(widget.index),
+                  onPressed: () {
+                    setState(() {
+                      repondrevisible = !repondrevisible;
+                    });
+                  },
                   icon: const Icon(
                     Icons.reply_rounded,
                     color: Colors.lightBlue,
                   ),
                   label: const Text(""),
+                ),
+              ),
+              Visibility(
+                visible: repondrevisible,
+                child: RepondreAUneReponse(
+                  reponse1: widget.reponse,
                 ),
               ),
             ],

@@ -10,16 +10,7 @@ class ListDesCartesQuestions extends StatelessWidget {
 
   Future<QuerySnapshot> getQuestions() async {
     var collectionQuestion = FirebaseFirestore.instance.collection("Questions");
-    return collectionQuestion
-        .get(); /*.then((QuerySnapshot querySnapshot) {
-      List<String> listDesQuestins = [];
-      querySnapshot.docs.forEach((doc) {
-        listDesQuestins.add(doc['titre']);
-        
-      });*/
-
-    //});
-    //return <String>[];
+    return await collectionQuestion.get();
   }
 
   final List<Question> li =
