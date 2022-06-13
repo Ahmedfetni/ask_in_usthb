@@ -49,11 +49,16 @@ class ServiceBaseDeDonnes {
 
   //Ajouter une question au favories
   Future ajouterUneQuestionAuFavories(String idQuestion) async {
-    await collectionUtilisateur.doc(uid).update({
-      //TODO Ajouter une question au favories
-    }).then((value) {
-      return value;
-    });
+    try {
+      await collectionUtilisateur.doc(uid).update({
+        //TODO Ajouter une question au favories
+        'favories': FieldValue.arrayUnion([idQuestion]),
+      }).then((value) {
+        return value;
+      });
+    } on FirebaseException catch (e) {
+      debugPrint("Failed with error '${e.code}': ${e.message}");
+    }
   }
 
   //pour ajouter une reponse

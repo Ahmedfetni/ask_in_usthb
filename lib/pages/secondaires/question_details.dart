@@ -31,6 +31,7 @@ class _QuestionDetailState extends State<QuestionDetail> {
   late Icon iconVotePlus;
   late int vote;
   late bool visible;
+  var iconFavorie = Icons.bookmark_add_rounded;
 
   var ajouterUneReponseDegre1 = false;
   @override
@@ -237,8 +238,19 @@ class _QuestionDetailState extends State<QuestionDetail> {
                       TextButton(
                         onPressed: () async {
                           //TODO Bookmark a question
+                          //TODO set state icon
+                          setState(() {
+                            iconFavorie = Icons.bookmark_added_rounded;
+                          });
+                          final uid =
+                              Provider.of<User?>(context, listen: false)?.uid;
+                          await ServiceBaseDeDonnes(uid: uid)
+                              .ajouterUneQuestionAuFavories(
+                                  widget.question.getId);
                         },
-                        child: const Icon(Icons.bookmark_add_rounded),
+                        child: Icon(
+                          iconFavorie,
+                        ),
                       ),
                     ],
                   ),
@@ -257,7 +269,6 @@ class _QuestionDetailState extends State<QuestionDetail> {
                         horizontal: 16.0, vertical: 8),
                     child: TextField(
                       onSubmitted: (value) async {
-                        //TODO Ajouter une reponse de degre 01
                         final uid =
                             Provider.of<User?>(context, listen: false)?.uid;
                         if (uid == null) {
