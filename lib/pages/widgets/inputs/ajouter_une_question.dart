@@ -93,6 +93,7 @@ class _AjouterUneQuestionState extends State<AjouterUneQuestion> {
           ))
         : Center(
             child: Container(
+              //color: Color.fromARGB(255, 59, 172, 182),
               width: MediaQuery.of(context).size.width * 0.9,
               padding: const EdgeInsets.all(8),
               child: Form(
@@ -102,9 +103,13 @@ class _AjouterUneQuestionState extends State<AjouterUneQuestion> {
                     TextFormField(
                       //controller: titreC,
                       decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 179, 232, 229),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
-                            borderSide: BorderSide(color: Colors.lightBlue)),
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 47, 143, 157),
+                            )),
                         hintText: "Titre de question",
                       ),
                       autofocus: true,
@@ -125,9 +130,13 @@ class _AjouterUneQuestionState extends State<AjouterUneQuestion> {
                       maxLines: null,
                       minLines: 4,
                       decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 179, 232, 229),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
-                            borderSide: BorderSide(color: Colors.lightBlue)),
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 47, 143, 157),
+                            )),
                         hintText: "Corp de question",
                       ),
                       onChanged: (valeur) {
@@ -141,6 +150,12 @@ class _AjouterUneQuestionState extends State<AjouterUneQuestion> {
                     ),
                     /******************* Pour choisir l'espace  *******************/
                     CoolDropdown(
+                      selectedItemBD: const BoxDecoration(
+                        color: Color.fromARGB(255, 179, 232, 229),
+                      ),
+                      /*dropdownBD: const BoxDecoration(
+                        color: Color.fromARGB(255, 179, 232, 229),
+                      ),*/
                       dropdownList: dropdownList,
                       onChange: (item) {
                         setState(() {
@@ -156,9 +171,12 @@ class _AjouterUneQuestionState extends State<AjouterUneQuestion> {
                     /* Ajouter un tag */
                     TextField(
                       decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 179, 232, 229),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
-                            borderSide: BorderSide(color: Colors.lightBlue)),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 47, 143, 157))),
                         hintText: "ajouter un tag",
                       ),
                       controller: ajouterUnTagControler,

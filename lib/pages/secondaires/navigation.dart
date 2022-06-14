@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'page_profil.dart';
 
 class Navigation extends StatefulWidget {
-  Navigation({
+  const Navigation({
     Key? key,
   }) : super(key: key);
 
@@ -22,42 +22,60 @@ class _NavigationState extends State<Navigation> {
     final utilisateurConnecter = context.watch<User?>();
     return Drawer(
       elevation: 8,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 222, 233, 232),
+      //Color.fromARGB(255, 190, 236,
+      //235), // Color.fromARGB(255, 130, 219, 216), //Color.fromARGB(255, 179, 232, 229),
       child: utilisateurConnecter == null
           ? const Center(child: ConnecterOuInscrire())
           : Container(
               padding: const EdgeInsets.all(16),
               child: Material(
+                color: const Color.fromARGB(255, 222, 233, 232),
+                //Color.fromARGB(255, 190, 236,235), //Color.fromARGB(255, 130, 219,216), //const Color.fromARGB(255, 179, 232, 229),
                 child: ListView(
                   children: [
                     Container(
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 222, 233,
+                            232), //Color.fromARGB(255, 190, 236, 235),
+                      ), //Color.fromARGB(255, 179, 232, 229)),
                       margin: const EdgeInsets.only(right: 100, top: 20),
                       height: MediaQuery.of(context).size.width / 4,
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 4, color: Colors.blueAccent),
-                              shape: BoxShape.circle),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Profil()));
-                            },
-                            child: CircleAvatar(
-                              minRadius:
-                                  MediaQuery.of(context).size.width * 0.1,
-                              backgroundColor: Colors.yellowAccent,
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Mohammed",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                        child: Hero(
+                          tag: "avatar",
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 2,
+                                      color: const Color.fromARGB(
+                                          255, 27, 36, 48)),
+                                  shape: BoxShape.circle),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Profil()));
+                                },
+                                child: CircleAvatar(
+                                  foregroundColor: Colors.white,
+                                  minRadius:
+                                      MediaQuery.of(context).size.width * 0.1,
+                                  backgroundColor: const Color.fromARGB(
+                                      255, 59, 172, 182), //Colors.yellowAccent,
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Mohammed",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -69,9 +87,11 @@ class _NavigationState extends State<Navigation> {
                       height: 30,
                     ),
                     Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
                       height: 3,
-                      color: Colors.blue,
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      color: const Color.fromARGB(255, 28, 67, 73),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.4),
                     ),
                     const SizedBox(
                       height: 30,
@@ -79,11 +99,13 @@ class _NavigationState extends State<Navigation> {
                     ListTile(
                       leading: const Icon(
                         Icons.info_rounded,
-                        color: Colors.blue,
+                        color: Color.fromARGB(255, 28, 67, 73),
                       ),
                       title: const Text(
                         "À Props",
-                        style: TextStyle(color: Colors.blue, fontSize: 18),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 28, 67, 73),
+                            fontSize: 20),
                       ),
                       onTap: () {},
                     ),
@@ -93,15 +115,37 @@ class _NavigationState extends State<Navigation> {
                     ListTile(
                       leading: const Icon(
                         Icons.logout_rounded,
-                        color: Colors.blue,
+                        color: Color.fromARGB(255, 28, 67, 73),
                       ),
                       title: const Text(
                         "Deconnexion",
-                        style: TextStyle(color: Colors.blue, fontSize: 18),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 28, 67, 73),
+                            fontSize: 20),
                       ),
                       onTap: () {
                         context.read<ServiceAuthentification>().deconnexion();
                       },
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ListTile(
+                        onTap: () {},
+                        leading: const Icon(
+                          Icons.copyright_rounded,
+                          color: Color.fromARGB(255, 28, 67, 73),
+                        ),
+                        title: const Text(
+                          "copyright",
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 28, 67, 73),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                   ],
                 ),

@@ -14,7 +14,7 @@ class PageNotification extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Colors.lightBlue.shade500,
+          backgroundColor: Color.fromARGB(255, 47, 143, 157),
           title: const Text("Notfications",
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white))),

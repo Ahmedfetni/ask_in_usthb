@@ -68,9 +68,9 @@ class _MyAppState extends State<MyApp> {
                     indexDesEcrant = index;
                   })),
               animationDuration: const Duration(milliseconds: 100),
-              buttonBackgroundColor: Colors.lightBlue,
-              backgroundColor: Colors.white,
-              color: Colors.lightBlue,
+              buttonBackgroundColor: Color.fromARGB(255, 47, 143, 157),
+              backgroundColor: Colors.transparent,
+              color: Color.fromARGB(255, 47, 143, 157),
               items: const [
                 Icon(
                   Icons.home,

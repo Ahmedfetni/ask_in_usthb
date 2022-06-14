@@ -13,6 +13,7 @@ class PageAccueil extends StatelessWidget {
     return Scaffold(
       drawer: Navigation(),
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 47, 143, 157),
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
@@ -43,10 +44,12 @@ class PageAccueil extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(right: 12, bottom: 12),
               child: FloatingActionButton(
+                backgroundColor: Color.fromARGB(255, 59, 172, 182),
                 onPressed: () {
                   showDialog(
                     context: context,
                     builder: (_) => AlertDialog(
+                      backgroundColor: Color.fromARGB(255, 59, 172, 182),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16)),
                       scrollable: true,
@@ -55,7 +58,7 @@ class PageAccueil extends StatelessWidget {
                     barrierDismissible: true,
                   );
                 },
-                elevation: 5,
+                elevation: 10,
                 child: const Icon(
                   Icons.question_mark_rounded,
                   color: Colors.white,

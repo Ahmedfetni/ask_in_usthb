@@ -61,8 +61,11 @@ class Question {
     }
     return Question(
       id: id,
-      titre: data.containsKey('titre') ? data['titre'] : 'titre par defaut',
-      corp: data.containsKey('corp') ? data['corp'] : "",
+      titre: data.containsKey('titre') && data['titre'] != null
+          ? data['titre']
+          : 'titre par defaut',
+      corp:
+          data.containsKey('corp') && data['titre'] != null ? data['corp'] : "",
       nomUtilisateur:
           data.containsKey('nomutilisateur') && data['nomutilisateur'] != null
               ? data['nomutilisateur']

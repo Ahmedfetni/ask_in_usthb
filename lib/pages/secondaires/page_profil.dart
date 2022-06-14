@@ -25,22 +25,30 @@ class Profil extends StatelessWidget {
         child: ListView(
           children: [
             SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-            Container(
-              decoration: BoxDecoration(
-                  border: Border.all(width: 4, color: Colors.blueAccent),
-                  shape: BoxShape.circle),
-              margin: const EdgeInsets.symmetric(vertical: 20),
-              child: CircleAvatar(
-                minRadius: MediaQuery.of(context).size.width * 0.2,
-                backgroundColor: Colors.yellowAccent,
-                foregroundColor: Colors.lightBlue,
-                // ignore: prefer_const_constructors
-                child: Text(
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
+            Hero(
+              tag: "avatar",
+              child: Material(
+                type: MaterialType.transparency,
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 4,
+                          color: const Color.fromARGB(255, 27, 36, 48)),
+                      shape: BoxShape.circle),
+                  margin: const EdgeInsets.symmetric(vertical: 20),
+                  child: CircleAvatar(
+                    minRadius: MediaQuery.of(context).size.width * 0.2,
+                    backgroundColor: Color.fromARGB(255, 59, 172, 182),
+                    // ignore: prefer_const_constructors
+                    child: Text(
+                      style: const TextStyle(
+                        fontSize: 32,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      "MO",
+                    ),
                   ),
-                  "MO",
                 ),
               ),
             ),

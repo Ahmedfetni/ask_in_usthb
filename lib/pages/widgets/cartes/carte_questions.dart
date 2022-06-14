@@ -34,7 +34,7 @@ class _CarteQuestionState extends State<CarteQuestion> {
           },
           child: Card(
             elevation: 5,
-            color: Colors.grey.shade100,
+            color: Color.fromARGB(255, 222, 233, 232),
             shadowColor: Colors.grey.shade700,
             shape: RoundedRectangleBorder(
                 side: const BorderSide(
@@ -61,10 +61,10 @@ class _CarteQuestionState extends State<CarteQuestion> {
                       borderRadius: const BorderRadius.all(Radius.circular(50)),
                     ),
                     child: CircleAvatar(
-                      backgroundColor: Colors.yellowAccent,
+                      backgroundColor: Color.fromARGB(255, 59, 172, 182),
                       child: Text(
                         style: const TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                            color: Colors.white, fontWeight: FontWeight.bold),
                         widget.question.getNomUtilisateur
                             .substring(0, 2)
                             .toUpperCase(),
@@ -77,6 +77,7 @@ class _CarteQuestionState extends State<CarteQuestion> {
                   title: Text(
                     //overflow: TextOverflow.ellipsis,
                     widget.question.getTitre,
+                    //style: const TextStyle(color: Colors.white),
                   ),
 
                   /* Le corp du la question  */
@@ -85,7 +86,9 @@ class _CarteQuestionState extends State<CarteQuestion> {
                       Text(
                         //overflow: TextOverflow.ellipsis,
                         widget.question.getCorp,
-                        style: const TextStyle(fontSize: 16),
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
                     ],
                   ),

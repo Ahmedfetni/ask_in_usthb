@@ -21,6 +21,7 @@ class _PageDesFavoriesState extends State<PageDesFavories> {
     final utilisateurConnecter = context.watch<User?>();
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 47, 143, 157),
         centerTitle: true,
         title: const Text(
           "Favories",
