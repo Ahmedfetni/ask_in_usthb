@@ -38,7 +38,7 @@ class Profil extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 20),
                   child: CircleAvatar(
                     minRadius: MediaQuery.of(context).size.width * 0.2,
-                    backgroundColor: Color.fromARGB(255, 59, 172, 182),
+                    backgroundColor: const Color.fromARGB(255, 59, 172, 182),
                     // ignore: prefer_const_constructors
                     child: Text(
                       style: const TextStyle(

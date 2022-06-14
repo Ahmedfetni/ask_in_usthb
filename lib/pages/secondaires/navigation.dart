@@ -89,7 +89,7 @@ class _NavigationState extends State<Navigation> {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.5,
                       height: 3,
-                      color: const Color.fromARGB(255, 28, 67, 73),
+                      color: const Color.fromARGB(255, 67, 145, 155),
                       padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.4),
                     ),
@@ -99,12 +99,12 @@ class _NavigationState extends State<Navigation> {
                     ListTile(
                       leading: const Icon(
                         Icons.info_rounded,
-                        color: Color.fromARGB(255, 28, 67, 73),
+                        color: Color.fromARGB(255, 67, 145, 155),
                       ),
                       title: const Text(
                         "À Props",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 28, 67, 73),
+                            color: Color.fromARGB(255, 67, 145, 155),
                             fontSize: 20),
                       ),
                       onTap: () {},
@@ -115,12 +115,12 @@ class _NavigationState extends State<Navigation> {
                     ListTile(
                       leading: const Icon(
                         Icons.logout_rounded,
-                        color: Color.fromARGB(255, 28, 67, 73),
+                        color: Color.fromARGB(255, 67, 145, 155),
                       ),
                       title: const Text(
                         "Deconnexion",
                         style: TextStyle(
-                            color: Color.fromARGB(255, 28, 67, 73),
+                            color: Color.fromARGB(255, 67, 145, 155),
                             fontSize: 20),
                       ),
                       onTap: () {
@@ -133,12 +133,12 @@ class _NavigationState extends State<Navigation> {
                         onTap: () {},
                         leading: const Icon(
                           Icons.copyright_rounded,
-                          color: Color.fromARGB(255, 28, 67, 73),
+                          color: Color.fromARGB(255, 67, 145, 155),
                         ),
                         title: const Text(
                           "copyright",
                           style: TextStyle(
-                            color: Color.fromARGB(255, 28, 67, 73),
+                            color: Color.fromARGB(255, 67, 145, 155),
                             fontSize: 20,
                           ),
                         ),

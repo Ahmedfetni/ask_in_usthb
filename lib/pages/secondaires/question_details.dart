@@ -122,8 +122,12 @@ class _QuestionDetailState extends State<QuestionDetail> {
             key: sliverListCasLoading,
             slivers: [
               GrandeCarteQuestion(question: widget.question),
-              const Center(
-                child: CircularProgressIndicator(),
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ]),
               ),
             ],
           );

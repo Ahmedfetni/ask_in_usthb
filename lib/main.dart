@@ -58,8 +58,10 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'Ask In USTHB',
           theme: ThemeData(
-            primarySwatch: Colors.lightBlue,
-          ),
+              primarySwatch: Colors.lightBlue,
+              appBarTheme: AppBarTheme(
+                backgroundColor: Color.fromARGB(255, 47, 143, 157),
+              )),
           home: Scaffold(
             body: listDesEcrant[
                 indexDesEcrant], //Center(child: CarteEspaceGenieMec()),
