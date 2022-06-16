@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import '../widgets/inputs/changer_mot_de_passe.dart';
+import '../../models/utilisateur.dart';
 
 class Profil extends StatelessWidget {
-  const Profil({Key? key}) : super(key: key);
+  Utilisateur utilisateur;
+  Profil({Key? key, required this.utilisateur}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class Profil extends StatelessWidget {
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
-                      "MO",
+                      utilisateur.nomUtilisateur.substring(0, 2).toUpperCase(),
                     ),
                   ),
                 ),
@@ -59,7 +61,7 @@ class Profil extends StatelessWidget {
                 child: Text(
                   style: const TextStyle(
                       fontSize: 24, fontWeight: FontWeight.bold),
-                  "Mohammed Amin",
+                  utilisateur.nomUtilisateur,
                 ),
               ),
             ),

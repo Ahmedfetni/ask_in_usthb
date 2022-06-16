@@ -1,21 +1,54 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Utilisateur {
   String nomUtilisateur;
-  String email;
-  String matricule;
-  int nombreVote;
-  int nombreReponse;
-  int nombreQuestion;
-  String statue;
-  String sexe;
+  String niveau;
+  String dateNaissance;
+  List<String> favories;
+  List<String> espaces;
 
-  Utilisateur({
-    required this.nomUtilisateur,
-    required this.email,
-    required this.matricule,
-    this.nombreVote = 0,
-    this.nombreReponse = 0,
-    this.nombreQuestion = 0,
-    required this.statue,
-    required this.sexe,
-  });
+  //String sexe;
+
+  Utilisateur(
+      {required this.nomUtilisateur,
+      required this.dateNaissance,
+      required this.espaces,
+      required this.favories,
+      required this.niveau});
+
+  static Utilisateur utilisateurFromSnapShot(
+      DocumentSnapshot<Object?>? snapshot) {
+    // ignore: unused_local_variable
+    String id = snapshot!.id;
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    //Crier la list des favories
+    List<String> listDesEspace = [];
+    if (data.containsKey("espaces") && data['espaces'] != null) {
+      List<dynamic> li = data['espaces'];
+      for (String element in li) {
+        listDesEspace.add(element);
+      }
+    }
+    List<String> listDesFavories = [];
+    if (data.containsKey("favories") && data["favories"] != null) {
+      List<dynamic> li = data["favories"];
+      for (String element in li) {
+        listDesFavories.add(element);
+      }
+    }
+    return Utilisateur(
+        nomUtilisateur:
+            data.containsKey("nomUtilisateur") && data["nomUtilisateur"] != null
+                ? data["nomUtilisateur"]
+                : "non reconue",
+        dateNaissance: data.containsKey("dateDeNaissance") &&
+                data["dateDeNaissance"] != null
+            ? data["dateDeNaissance"]
+            : "non reconue",
+        espaces: listDesEspace,
+        favories: listDesFavories,
+        niveau: data.containsKey("niveau") && data["niveau"] != null
+            ? data["niveau"]
+            : "non reconue");
+  }
 }
