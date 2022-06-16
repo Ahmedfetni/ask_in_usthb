@@ -6,14 +6,14 @@ import '../secondaires/rechercher_par_tag.dart';
 
 // ignore: camel_case_types
 class PageAccueil extends StatelessWidget {
-  PageAccueil({Key? key}) : super(key: key);
+  const PageAccueil({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Navigation(),
+      drawer: const Navigation(),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 47, 143, 157),
+        backgroundColor: const Color.fromARGB(255, 47, 143, 157),
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
@@ -44,12 +44,12 @@ class PageAccueil extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(right: 12, bottom: 12),
               child: FloatingActionButton(
-                backgroundColor: Color.fromARGB(255, 59, 172, 182),
+                backgroundColor: const Color.fromARGB(255, 0, 255, 198),
                 onPressed: () {
                   showDialog(
                     context: context,
                     builder: (_) => AlertDialog(
-                      backgroundColor: Color.fromARGB(255, 59, 172, 182),
+                      backgroundColor: const Color.fromARGB(255, 85, 178, 190),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16)),
                       scrollable: true,
@@ -61,7 +61,8 @@ class PageAccueil extends StatelessWidget {
                 elevation: 10,
                 child: const Icon(
                   Icons.question_mark_rounded,
-                  color: Colors.white,
+                  size: 30,
+                  color: Colors.white, // Color.fromARGB(255, 48, 170, 221),
                 ),
               ),
             ),

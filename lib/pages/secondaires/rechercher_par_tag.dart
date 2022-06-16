@@ -1,3 +1,4 @@
+import 'package:ask_in_usthb/pages/secondaires/page_resultat_recherche.dart';
 import 'package:flutter/material.dart';
 
 class RecherchParTag extends SearchDelegate {
@@ -29,7 +30,8 @@ class RecherchParTag extends SearchDelegate {
       label: const Text(""));
 
   @override
-  Widget buildResults(BuildContext context) => Center(child: Text(query));
+  Widget buildResults(BuildContext context) =>
+      PagreResultatRecherche(query: query);
 
   @override
   Widget buildSuggestions(BuildContext context) {

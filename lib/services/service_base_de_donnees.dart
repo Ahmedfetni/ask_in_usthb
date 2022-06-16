@@ -1,8 +1,13 @@
+//import 'package:email_validator/email_validator.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ask_in_usthb/models/utilisateur.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//TODO ajouter vote pour reponse et reponse a une reponse
+//TODO les espace
+//TODO recherche
 class ServiceBaseDeDonnes {
   final String? uid;
   ServiceBaseDeDonnes({required this.uid});
@@ -20,6 +25,14 @@ class ServiceBaseDeDonnes {
       "nomUtilisateur": nomUtilisateur,
       "niveau": niveau,
       "dateDeNaissance": dateDeNaissance,
+      "favories": [],
+      "questions": [],
+      "reponse": [],
+      "qVotePlus": [],
+      "qVoteMoins": [],
+      "rVotePlus": [],
+      "rVoteMoins": [],
+      "espaces": []
     });
   }
 
@@ -34,16 +47,53 @@ class ServiceBaseDeDonnes {
     });
   }
 
-  Future mettreAjourVote(String idQuestion, int vote) async {
-    //TODO add a test so the user can not vote twice on the same question like a +2 or something
+  Future<bool> mettreAjourVote(String idQuestion, int vote, bool plus) async {
     try {
-      await collectionQuestion
-          .doc(idQuestion)
-          .update({"vote": vote}).then((value) {
-        return value;
-      });
+      String typeVote = plus ? "qVotePlus" : "qVoteMoins";
+      String otherType = !plus ? "qVotePlus" : "qVoteMoins";
+      DocumentSnapshot utilisateur = await collectionUtilisateur.doc(uid).get();
+      if (utilisateur.exists) {
+        Map<String, dynamic> data = utilisateur.data() as Map<String, dynamic>;
+        for (String el in data.keys) {
+          debugPrint(el);
+        }
+        if (data.containsKey(otherType)) {
+          List<dynamic> liIdOther = data[otherType] as List<dynamic>;
+          if (liIdOther.contains(idQuestion)) {
+            //Traitement ou cas ou l'utilisateur a deja ajouter un vote et il veut inverser ce vote
+            //liIdOther.remove(idQuestion); //Supprimer l'ID de la question
+            await collectionUtilisateur.doc(uid).update({
+              otherType: FieldValue.arrayRemove([idQuestion])
+            });
+          }
+        }
+        if (data.containsKey(type)) {
+          List<dynamic> liId = data[typeVote] as List<dynamic>;
+          if (!(liId.contains(idQuestion))) {
+            await collectionUtilisateur.doc(uid).update({
+              typeVote: FieldValue.arrayUnion([idQuestion]),
+            });
+            await collectionQuestion
+                .doc(idQuestion)
+                .update({"vote": vote}).then((value) {
+              return true;
+            });
+          }
+        } else {
+          await collectionUtilisateur.doc(uid).update({
+            typeVote: FieldValue.arrayUnion([idQuestion]),
+          });
+          await collectionQuestion
+              .doc(idQuestion)
+              .update({"vote": vote}).then((value) {
+            return true;
+          });
+        }
+      }
+      return false;
     } on FirebaseException catch (e) {
       debugPrint("Failed with error '${e.code}': ${e.message}");
+      return false;
     }
   }
 
@@ -68,19 +118,46 @@ class ServiceBaseDeDonnes {
   ) async {
     final collectionDesRponse1 =
         collectionQuestion.doc(idQuestion).collection("reponses");
+    if (uid != null) {
+      try {
+        String nomUtilisateur = await getNomUtilisateur(uid!);
+        await collectionDesRponse1.add({
+          'idQuestion': idQuestion,
+          'uid': uid,
+          'nomutilisateur': nomUtilisateur,
+          'text': text,
+          'vote': 0,
+          'date': FieldValue.serverTimestamp(),
+        }).then((value) {
+          return value;
+        });
+      } on FirebaseException catch (e) {
+        // Caught an exception from Firebase.
+        debugPrint("Failed with error '${e.code}': ${e.message}");
+      }
+    }
+  }
+
+  //Ajouter une reponse a une reponse
+  Future ajouterUneReponse2(
+      String idQuestion, String idReponse, String text) async {
+    final collection = collectionQuestion
+        .doc(idQuestion)
+        .collection("reponses")
+        .doc(idReponse)
+        .collection("reponseDegre2");
     try {
       String nomUtilisateur = await getNomUtilisateur(uid!);
-      await collectionDesRponse1.add({
+      await collection.add({
+        'idQuestion': idQuestion,
+        "idReponse1": idReponse,
         'uid': uid,
         'nomutilisateur': nomUtilisateur,
         'text': text,
         'vote': 0,
         'date': FieldValue.serverTimestamp(),
-      }).then((value) {
-        return value;
       });
     } on FirebaseException catch (e) {
-      // Caught an exception from Firebase.
       debugPrint("Failed with error '${e.code}': ${e.message}");
     }
   }

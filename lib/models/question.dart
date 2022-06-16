@@ -86,6 +86,14 @@ class Question {
   String get getDate => date;
   List<Tag> get getTags => listDesTags;
   List<ReponseDegre1> get getReponses => reponses;
+  bool tagExiste(String nom) {
+    for (Tag tag in listDesTags) {
+      if (tag.getNom.contains(nom)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   void addTag(String nomDuTag) {
     Tag tag = Tag(nom: nomDuTag);

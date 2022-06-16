@@ -66,7 +66,7 @@ class _NavigationState extends State<Navigation> {
                                   minRadius:
                                       MediaQuery.of(context).size.width * 0.1,
                                   backgroundColor: const Color.fromARGB(
-                                      255, 59, 172, 182), //Colors.yellowAccent,
+                                      255, 48, 170, 221), //Colors.yellowAccent,
                                   child: const Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Text(

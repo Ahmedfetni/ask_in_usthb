@@ -1,6 +1,7 @@
 //import 'dart:io';
 
 import 'package:ask_in_usthb/pages/widgets/cartes/grandeCarteQuestion.dart';
+import 'package:ask_in_usthb/pages/widgets/list_des_reponses2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/question.dart';
@@ -24,6 +25,7 @@ class QuestionDetail extends StatefulWidget {
   State<QuestionDetail> createState() => _QuestionDetailState();
 }
 
+//TOOD  affichier les reponses a une reponse
 class _QuestionDetailState extends State<QuestionDetail> {
   final sliverListCasErreur = UniqueKey();
   final sliverListCasLoading = UniqueKey();
@@ -106,16 +108,19 @@ class _QuestionDetailState extends State<QuestionDetail> {
             for (var element in snapshot.data!.docs) {
               li.add(ReponseDegre1.reponseFromSnapshot(element));
             }
-            return CustomScrollView(
+            List<Widget> listDesSlivers = [];
+            listDesSlivers.add(GrandeCarteQuestion(question: widget.question));
+            for (var element in li) {
+              listDesSlivers.add(SliverList(
+                  delegate: SliverChildListDelegate(
+                      [CarteReponse(reponse: element)])));
+              listDesSlivers.add(ListDesReponse2(reponse1: element));
+            }
+            return
+                //NestedScrollView(headerSliverBuilder: headerSliverBuilder, body: body)
+                CustomScrollView(
               key: sliverListCasResultat,
-              slivers: [
-                GrandeCarteQuestion(question: widget.question),
-                //..._listDesReponses(li),
-                SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        childCount: li.length,
-                        (context, index) => CarteReponse(reponse: li[index])))
-              ],
+              slivers: listDesSlivers,
             );
           }
           return CustomScrollView(
@@ -125,7 +130,9 @@ class _QuestionDetailState extends State<QuestionDetail> {
               SliverList(
                 delegate: SliverChildListDelegate([
                   const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: Color.fromARGB(255, 47, 143, 157),
+                    ),
                   ),
                 ]),
               ),

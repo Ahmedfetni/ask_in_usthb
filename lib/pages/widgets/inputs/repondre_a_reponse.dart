@@ -1,15 +1,21 @@
+import 'package:ask_in_usthb/services/service_base_de_donnees.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+
 import '../../../models/reponse_degre1.dart';
 import '../../../models/reponse_degre2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class RepondreAUneReponse extends StatefulWidget {
+  VoidCallback visibilite;
   //bool visible;
   //int index;
   ReponseDegre1 reponse1;
   RepondreAUneReponse({
     Key? key,
     required this.reponse1,
+    required this.visibilite,
   }) : super(key: key);
 
   @override
@@ -44,15 +50,16 @@ class _RepondreAUneReponseState extends State<RepondreAUneReponse> {
               suffixIcon: Icon(Icons.send_rounded),
               hintText: "Ecrire votre reponse",
             ),
-            onSubmitted: (value) {
-              setState(() {
-                widget.reponse1.ajouterUneReponse(ReponseDegre2(
-                  id: '',
-                  nomUtilisateur: "ahmed",
-                  date: dateFormat.format(DateTime.now()),
-                  text: value,
-                ));
-              });
+            onSubmitted: (value) async {
+              if (value.isNotEmpty) {
+                final uid = Provider.of<User?>(context, listen: false)?.uid;
+
+                await ServiceBaseDeDonnes(uid: uid).ajouterUneReponse2(
+                    widget.reponse1.idQuestion, widget.reponse1.id, value);
+                setState(() {
+                  widget.visibilite();
+                });
+              }
             },
           ),
         ),

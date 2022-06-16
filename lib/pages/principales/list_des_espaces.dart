@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class ListDesEspaces extends StatelessWidget {
   bool utilisateurConnecter;
-  ListDesEspaces({Key? key, required this.utilisateurConnecter})
+  ListDesEspaces({Key? key, this.utilisateurConnecter = true})
       : super(key: key);
 
   @override

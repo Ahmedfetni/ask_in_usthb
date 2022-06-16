@@ -196,6 +196,7 @@ class _CrierCompteState extends State<CrierCompte> {
                   child: ListView(
                     children: [
                       /* ******************************** Choisir le nom de l'utilisateur ******************************** */
+                      _espaceVide(),
                       TextFormField(
                         decoration: nomDeUtilisateurDecoration,
                         onChanged: (val) => {
@@ -286,12 +287,17 @@ class _CrierCompteState extends State<CrierCompte> {
                           }
                         },
                       ),
+                      _espaceVide(),
                       /* Un champ text pour confermer le  mot de passe */
                       TextFormField(
                         //La meme decoration du mot de passe mais avec des quelque petites changements
                         decoration: motDePasseDecoration.copyWith(
-                          label: const Text("Confermer le mot de passe"),
+                          label: const Text(
+                            "Confermer le mot de passe",
+                            style: TextStyle(color: Colors.lightBlue),
+                          ),
                           hintText: "repeter le mot de passe",
+                          hintStyle: const TextStyle(color: Colors.lightBlue),
                         ),
                         obscureText:
                             textInvisible, //pour rendre le mot de passe visible ou invisble
@@ -426,7 +432,8 @@ class _CrierCompteState extends State<CrierCompte> {
                           },
                           style: TextButton.styleFrom(
                             elevation: 2,
-                            backgroundColor: Colors.lightBlue.shade300,
+                            backgroundColor:
+                                const Color.fromARGB(255, 0, 255, 198),
                           ),
                           child: const Text(
                             "Inscrire",

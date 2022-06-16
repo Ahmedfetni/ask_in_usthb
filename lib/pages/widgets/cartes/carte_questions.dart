@@ -34,7 +34,7 @@ class _CarteQuestionState extends State<CarteQuestion> {
           },
           child: Card(
             elevation: 5,
-            color: Color.fromARGB(255, 222, 233, 232),
+            color: const Color.fromARGB(255, 222, 233, 232),
             shadowColor: Colors.grey.shade700,
             shape: RoundedRectangleBorder(
                 side: const BorderSide(
@@ -55,19 +55,27 @@ class _CarteQuestionState extends State<CarteQuestion> {
                                   question: widget.question,
                                 ))));
                   },
-                  leading: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.blue),
-                      borderRadius: const BorderRadius.all(Radius.circular(50)),
-                    ),
-                    child: CircleAvatar(
-                      backgroundColor: Color.fromARGB(255, 59, 172, 182),
-                      child: Text(
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                        widget.question.getNomUtilisateur
-                            .substring(0, 2)
-                            .toUpperCase(),
+                  leading: Hero(
+                    tag: widget.question.id,
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: Colors.blue),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(50)),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: Color.fromARGB(255, 48, 170, 221),
+                          child: Text(
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                            widget.question.getNomUtilisateur
+                                .substring(0, 2)
+                                .toUpperCase(),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -130,8 +138,8 @@ class _CarteQuestionState extends State<CarteQuestion> {
                 });
               },
               child: Container(
-                decoration: BoxDecoration(color: Colors.white54),
-                padding: EdgeInsets.symmetric(vertical: 40),
+                decoration: const BoxDecoration(color: Colors.white54),
+                padding: const EdgeInsets.symmetric(vertical: 40),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,

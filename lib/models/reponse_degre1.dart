@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class ReponseDegre1 {
-  String nomUtilisateur, id;
+  String nomUtilisateur, id, idQuestion;
   String text;
   int vote;
   String date;
@@ -11,6 +11,7 @@ class ReponseDegre1 {
 
   ReponseDegre1(
       {required this.id,
+      required this.idQuestion,
       required this.nomUtilisateur,
       required this.text,
       this.vote = 0,
@@ -31,10 +32,11 @@ class ReponseDegre1 {
           ? data["nomutilisateur"]
           : "default",
       text: data.containsKey("text") ? data["text"] : "vide",
-      date: data.containsKey("date")
+      date: data.containsKey("date") && data["date"] != null
           ? dateFormat.format(DateTime.parse(data['date'].toDate().toString()))
           : "auccune date",
       vote: data.containsKey("vote") ? data["vote"] : 0,
+      idQuestion: data.containsKey("idQuestion") ? data['idQuestion'] : "",
     );
   }
 

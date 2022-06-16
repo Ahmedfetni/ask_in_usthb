@@ -73,23 +73,29 @@ class _GrandeCarteQuestionState extends State<GrandeCarteQuestion> {
       delegate: SliverChildListDelegate(
         [
           Center(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(
-                    style: BorderStyle.solid, color: Colors.blue, width: 4),
-              ),
-              margin: const EdgeInsets.only(bottom: 10, top: 20),
-              child: CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.yellowAccent,
-                foregroundColor: Colors.blue,
-                child: Text(
-                  widget.question.getNomUtilisateur
-                      .substring(0, 2)
-                      .toUpperCase(),
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
+            child: Hero(
+              tag: widget.question.id,
+              child: Material(
+                type: MaterialType.transparency,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(
+                        style: BorderStyle.solid, color: Colors.blue, width: 4),
+                  ),
+                  margin: const EdgeInsets.only(bottom: 10, top: 20),
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Color.fromARGB(255, 48, 170, 221),
+                    foregroundColor: Colors.white,
+                    child: Text(
+                      widget.question.getNomUtilisateur
+                          .substring(0, 2)
+                          .toUpperCase(),
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -158,6 +164,11 @@ class _GrandeCarteQuestionState extends State<GrandeCarteQuestion> {
                 //vote +
                 TextButton.icon(
                     onPressed: () async {
+                      final uid =
+                          Provider.of<User?>(context, listen: false)?.uid;
+                      final modfier = await ServiceBaseDeDonnes(uid: uid)
+                          .mettreAjourVote(widget.question.getId, vote, true);
+                      //if (modfier) {
                       setState(() {
                         if (!plusCliquer) {
                           vote++;
@@ -182,16 +193,20 @@ class _GrandeCarteQuestionState extends State<GrandeCarteQuestion> {
                         }
                         plusCliquer = !plusCliquer;
                       });
-                      final uid =
-                          Provider.of<User?>(context, listen: false)?.uid;
-                      await ServiceBaseDeDonnes(uid: uid)
-                          .mettreAjourVote(widget.question.getId, vote);
+                      //}
                     },
                     icon: iconVotePlus,
                     label: const Text("")),
                 //vote -
                 TextButton.icon(
                     onPressed: () async {
+                      final uid =
+                          Provider.of<User?>(context, listen: false)?.uid;
+                      final modifier = await ServiceBaseDeDonnes(uid: uid)
+                          .mettreAjourVote(
+                              widget.question.getId, vote - 1, false);
+                      debugPrint("Modfier est $modifier et uid est $uid");
+                      //if (modifier) {
                       setState(() {
                         if (!moinsCliquer) {
                           vote--;
@@ -216,10 +231,7 @@ class _GrandeCarteQuestionState extends State<GrandeCarteQuestion> {
                         }
                         moinsCliquer = !moinsCliquer;
                       });
-                      final uid =
-                          Provider.of<User?>(context, listen: false)?.uid;
-                      await ServiceBaseDeDonnes(uid: uid)
-                          .mettreAjourVote(widget.question.getId, vote);
+                      //}
                     },
                     icon: iconVoteMoins,
                     label: const Text("")),
@@ -235,8 +247,6 @@ class _GrandeCarteQuestionState extends State<GrandeCarteQuestion> {
                 //Pour sauvgarder une question
                 TextButton(
                   onPressed: () async {
-                    //TODO Bookmark a question
-                    //TODO set state icon
                     setState(() {
                       iconFavorie = Icons.bookmark_added_rounded;
                     });

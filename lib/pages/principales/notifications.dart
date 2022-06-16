@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class PageNotification extends StatelessWidget {
   final bool utilisateurConnecter;
-  const PageNotification({Key? key, required this.utilisateurConnecter})
+  const PageNotification({Key? key, this.utilisateurConnecter = false})
       : super(key: key);
 
   @override

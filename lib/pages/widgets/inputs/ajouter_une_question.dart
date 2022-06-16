@@ -82,14 +82,17 @@ class _AjouterUneQuestionState extends State<AjouterUneQuestion> {
     super.dispose();
   }
 
+  //TODO ajouter un validateur pour ne pas envoyer un question vide
   @override
   Widget build(BuildContext context) {
-    List<Tag> tags;
+    //List<Tag> tags;
     return loading
         ? const Center(
             child: Padding(
             padding: EdgeInsets.all(20),
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: Color.fromARGB(255, 47, 143, 157),
+            ),
           ))
         : Center(
             child: Container(
@@ -224,7 +227,10 @@ class _AjouterUneQuestionState extends State<AjouterUneQuestion> {
                         ),
                         child: const Text(
                           "Publiber",
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 47, 143, 157),
+                          ),
                         ),
                       ),
                     ),
