@@ -34,32 +34,46 @@ class _AjouterUneQuestionState extends State<AjouterUneQuestion> {
   List dropdownList = [
     {
       'label': "Génie civil",
-      'value': "Faculté de génie civil",
+      'value': "Faculte de génie civil",
     },
     {
       'label':
           "Sciences de la terre, de la géographie et de l’aménagement du territoire",
-      'value':
-          "Faculté des sciences de la terre, de la géographie et de l’aménagement du territoire"
+      'value': "Faculte des sciences de la terre et de geographie"
     },
     {
       'label': "Electronique",
-      'value': "Faculté d’électronique",
+      'value': "Faculte de génie electrique",
     },
     {
       'label': "Informatique",
-      'value': "Faculté d’informatique",
+      'value': "Faculte d'informatique",
     },
-    {'label': "Mathématiques", 'value': "Faculté de mathématiques"},
+    {
+      'label': "Mathématiques",
+      'value': "Faculte de mathématiques",
+    },
+    {
+      'label': "Faculte de chemie",
+      'value': "Faculte de chemie",
+    },
     {
       'label': "Génie mécanique et des procédés",
-      'value': "Faculté de génie mécanique et des procédés"
+      'value': "Faculte de génie mécanique et génie des procedes",
     },
     {
       'label': "Physique",
-      'value': "Faculté de physique",
+      'value': "Faculte de physique",
     },
-    {'label': 'Sans Espace', 'value': 'aucun'}
+    //Faculte des Science biologiques
+    {
+      'label': "Biologie",
+      'value': "Faculte des Science biologiques",
+    },
+    {
+      'label': 'Sans Espace',
+      'value': 'aucun',
+    }
   ];
   final formKey = GlobalKey<FormState>();
   String espace = "Chimie";

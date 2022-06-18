@@ -70,7 +70,9 @@ class Question {
           data.containsKey('nomutilisateur') && data['nomutilisateur'] != null
               ? data['nomutilisateur']
               : "defaut",
-      date: dateFormat.format(DateTime.parse(data['date'].toDate().toString())),
+      date: data.containsKey('date') && data['date'] != null
+          ? dateFormat.format(DateTime.parse(data['date'].toDate().toString()))
+          : 'auccune',
       espace: data.containsKey('espace') ? data['espace'] : "sans espace",
       listDesTags: listDesTag,
       vote: data['vote'],

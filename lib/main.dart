@@ -137,14 +137,14 @@ class _PageIntialState extends State<PageIntial> {
                   ],
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.1,
                 ),
                 const CircularProgressIndicator(
                     strokeWidth: 8,
                     color: Color.fromARGB(255, 0, 255, 198),
                     backgroundColor: Color.fromARGB(255, 193, 236, 226)),
                 const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 const Text(
                   "en attendant d'établir la connexion Internet ",
@@ -154,6 +154,26 @@ class _PageIntialState extends State<PageIntial> {
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 133, 242, 217),
                   ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => PagePrincipale())));
+                  },
+                  label: Wrap(children: const [
+                    Text(
+                      "Passer au mode hors ligne",
+                      style: TextStyle(
+                          fontSize: 16, color: Color.fromARGB(255, 10, 65, 74)),
+                    )
+                  ]),
+                  icon: const Icon((Icons.navigate_next_rounded),
+                      size: 16, color: Color.fromARGB(255, 10, 65, 74)),
                 ),
               ],
             ),

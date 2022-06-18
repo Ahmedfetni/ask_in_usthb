@@ -5,6 +5,7 @@ import '../widgets/cartes/carte_questions.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// ignore: must_be_immutable
 class ListDesCartesQuestions extends StatelessWidget {
   ListDesCartesQuestions({Key? key}) : super(key: key);
 
@@ -14,7 +15,7 @@ class ListDesCartesQuestions extends StatelessWidget {
   }
 
   List<Question> li =
-      <Question>[]; //TODO implement the fetching of questions list
+      <Question>[]; 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<QuerySnapshot>(

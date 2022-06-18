@@ -117,7 +117,7 @@ class _CarteQuestionState extends State<CarteQuestion> {
                         ),
                         "${widget.question.vote}",
                       ),
-                      Text("${widget.question.getReponses.length} Réponse"),
+                      //Text("${widget.question.getReponses.length} Réponse"),
                       Text(widget.question.getDate),
                     ],
                   ),

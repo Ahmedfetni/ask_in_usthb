@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:ask_in_usthb/models/utilisateur.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//TODO ajouter vote pour reponse et reponse a une reponse
-//TODO les espace
-//TODO recherche
+//TODO vote a les reponse d'une reponse
+
 class ServiceBaseDeDonnes {
   final String? uid;
   ServiceBaseDeDonnes({required this.uid});
@@ -15,6 +14,7 @@ class ServiceBaseDeDonnes {
       FirebaseFirestore.instance.collection("utilisateurs");
   final CollectionReference collectionQuestion =
       FirebaseFirestore.instance.collection("Questions");
+
   //Ajouter un utilisateur
   Future mettreAjourInfo(
     String nomUtilisateur,
@@ -33,6 +33,14 @@ class ServiceBaseDeDonnes {
       "rVotePlus": [],
       "rVoteMoins": [],
       "espaces": []
+    });
+  }
+
+  //Pour ajouter un espace a un utilisateur
+  Future ajouterEspace(String espace) async {
+    final refrence = collectionUtilisateur.doc(uid);
+    return await refrence.update({
+      "espaces": FieldValue.arrayUnion([espace])
     });
   }
 
@@ -83,9 +91,10 @@ class ServiceBaseDeDonnes {
           await collectionUtilisateur.doc(uid).update({
             typeVote: FieldValue.arrayUnion([idQuestion]),
           });
+          int valeur = plus ? 1 : -1;
           await collectionQuestion
               .doc(idQuestion)
-              .update({"vote": vote}).then((value) {
+              .update({"vote": FieldValue.increment(valeur)}).then((value) {
             return true;
           });
         }
