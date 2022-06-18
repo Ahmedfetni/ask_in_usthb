@@ -44,6 +44,14 @@ class ServiceBaseDeDonnes {
     });
   }
 
+  //Supprimer un espace a un utilisateur
+  Future supprimerEspace(String espace) async {
+    final refrence = collectionUtilisateur.doc(uid);
+    return await refrence.update({
+      "espaces": FieldValue.arrayRemove([espace])
+    });
+  }
+
   //pour recevoire le nom de l'utilisateur
   Future<String> getNomUtilisateur(String uid) async {
     return await FirebaseFirestore.instance

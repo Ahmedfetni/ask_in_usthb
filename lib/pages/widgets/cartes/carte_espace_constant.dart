@@ -2,6 +2,7 @@
 
 import 'package:ask_in_usthb/pages/principales/list_des_espaces.dart';
 import 'package:ask_in_usthb/pages/secondaires/un_espace.dart';
+import 'package:ask_in_usthb/pages/widgets/boutton_inscrire_a_un_espace.dart';
 
 import '../../../models/espace.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,6 @@ class _CarteEspaceConstantState extends State<CarteEspaceConstant> {
                         widget.espace.getNom,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.lightBlue,
                           fontSize: 18,
                         ),
                       ),
@@ -74,15 +74,9 @@ class _CarteEspaceConstantState extends State<CarteEspaceConstant> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: TextButton.icon(
-                      onPressed: () {
-                        //TODO ajouter l'espace a l'uutilisateur
-                      },
-                      icon: const Icon(
-                        Icons.add_rounded,
-                        color: Colors.lightBlue,
-                      ),
-                      label: const Text("")),
+                  child: BouttonInscrireAUnEspace(
+                    espace: widget.espace,
+                  ),
                 ),
               ],
             ),
