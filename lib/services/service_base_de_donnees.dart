@@ -63,10 +63,13 @@ class ServiceBaseDeDonnes {
     });
   }
 
-  Future<bool> mettreAjourVote(String idQuestion, int vote, bool plus) async {
+  //Ajouter un vote a une reponse degre 1
+  Future<bool> mettreAjourVoteReponse(
+      String idQuestion, int vote, String idReponse, bool plus) async {
     try {
-      String typeVote = plus ? "qVotePlus" : "qVoteMoins";
-      String otherType = !plus ? "qVotePlus" : "qVoteMoins";
+      String typeVote = plus ? "rVotePlus" : "rVoteMoins";
+      String otherType = !plus ? "rVotePlus" : "rVoteMoins";
+      int valeur = plus ? 1 : -1;
       DocumentSnapshot utilisateur = await collectionUtilisateur.doc(uid).get();
       if (utilisateur.exists) {
         Map<String, dynamic> data = utilisateur.data() as Map<String, dynamic>;
@@ -91,7 +94,9 @@ class ServiceBaseDeDonnes {
             });
             await collectionQuestion
                 .doc(idQuestion)
-                .update({"vote": vote}).then((value) {
+                .collection("reponses")
+                .doc(idReponse)
+                .update({"vote": FieldValue.increment(valeur)}).then((value) {
               return true;
             });
           }
@@ -99,7 +104,62 @@ class ServiceBaseDeDonnes {
           await collectionUtilisateur.doc(uid).update({
             typeVote: FieldValue.arrayUnion([idQuestion]),
           });
-          int valeur = plus ? 1 : -1;
+
+          await collectionQuestion
+              .doc(idQuestion)
+              .collection("reponses")
+              .doc(idReponse)
+              .update({"vote": FieldValue.increment(valeur)}).then((value) {
+            return true;
+          });
+        }
+      }
+      return false;
+    } on FirebaseException catch (e) {
+      debugPrint("Failed with error '${e.code}': ${e.message}");
+      return false;
+    }
+  }
+
+  //Ajouter un vote a une question
+  Future<bool> mettreAjourVote(String idQuestion, int vote, bool plus) async {
+    try {
+      String typeVote = plus ? "qVotePlus" : "qVoteMoins";
+      String otherType = !plus ? "qVotePlus" : "qVoteMoins";
+      int valeur = plus ? 1 : -1;
+      DocumentSnapshot utilisateur = await collectionUtilisateur.doc(uid).get();
+      if (utilisateur.exists) {
+        Map<String, dynamic> data = utilisateur.data() as Map<String, dynamic>;
+        for (String el in data.keys) {
+          debugPrint(el);
+        }
+        if (data.containsKey(otherType)) {
+          List<dynamic> liIdOther = data[otherType] as List<dynamic>;
+          if (liIdOther.contains(idQuestion)) {
+            //Traitement ou cas ou l'utilisateur a deja ajouter un vote et il veut inverser ce vote
+            //liIdOther.remove(idQuestion); //Supprimer l'ID de la question
+            await collectionUtilisateur.doc(uid).update({
+              otherType: FieldValue.arrayRemove([idQuestion])
+            });
+          }
+        }
+        if (data.containsKey(type)) {
+          List<dynamic> liId = data[typeVote] as List<dynamic>;
+          if (!(liId.contains(idQuestion))) {
+            await collectionUtilisateur.doc(uid).update({
+              typeVote: FieldValue.arrayUnion([idQuestion]),
+            });
+            await collectionQuestion
+                .doc(idQuestion)
+                .update({"vote": FieldValue.increment(valeur)}).then((value) {
+              return true;
+            });
+          }
+        } else {
+          await collectionUtilisateur.doc(uid).update({
+            typeVote: FieldValue.arrayUnion([idQuestion]),
+          });
+
           await collectionQuestion
               .doc(idQuestion)
               .update({"vote": FieldValue.increment(valeur)}).then((value) {

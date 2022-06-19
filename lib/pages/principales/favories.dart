@@ -1,3 +1,5 @@
+import 'package:ask_in_usthb/pages/widgets/list_des_favories.dart';
+
 import '../widgets/connecter_ou_inscrire.dart';
 import '../widgets/list_des_cartes_questions.dart';
 //import '../../models/question.dart';
@@ -22,7 +24,7 @@ class _PageDesFavoriesState extends State<PageDesFavories> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color.fromARGB(255, 47, 143, 157),
+        backgroundColor: const Color.fromARGB(255, 47, 143, 157),
         centerTitle: true,
         title: const Text(
           "Favories",
@@ -30,7 +32,9 @@ class _PageDesFavoriesState extends State<PageDesFavories> {
         ),
       ),
       body: utilisateurConnecter != null
-          ? ListDesCartesQuestions()
+          ? ListDesfavories(
+              uid: utilisateurConnecter.uid,
+            )
           : const Center(
               child: ConnecterOuInscrire(),
             ),
