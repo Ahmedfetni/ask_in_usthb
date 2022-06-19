@@ -173,7 +173,7 @@ class _ConnexionState extends State<Connexion> {
                             const SnackBar(
                                 content: Text("Login avec succees")));*/
 
-                              context
+                              await context
                                   .read<ServiceAuthentification>()
                                   .connexion(
                                       email: email, motDePasse: motDePasse)
