@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Utilisateur {
+  String uid;
   String nomUtilisateur;
   String niveau;
   String dateNaissance;
@@ -14,7 +15,8 @@ class Utilisateur {
       required this.dateNaissance,
       required this.espaces,
       required this.favories,
-      required this.niveau});
+      required this.niveau,
+      required this.uid});
 
   static Utilisateur utilisateurFromSnapShot(
       DocumentSnapshot<Object?>? snapshot) {
@@ -37,18 +39,20 @@ class Utilisateur {
       }
     }
     return Utilisateur(
-        nomUtilisateur:
-            data.containsKey("nomUtilisateur") && data["nomUtilisateur"] != null
-                ? data["nomUtilisateur"]
-                : "non reconue",
-        dateNaissance: data.containsKey("dateDeNaissance") &&
-                data["dateDeNaissance"] != null
-            ? data["dateDeNaissance"]
-            : "non reconue",
-        espaces: listDesEspace,
-        favories: listDesFavories,
-        niveau: data.containsKey("niveau") && data["niveau"] != null
-            ? data["niveau"]
-            : "non reconue");
+      uid: snapshot.id,
+      nomUtilisateur:
+          data.containsKey("nomUtilisateur") && data["nomUtilisateur"] != null
+              ? data["nomUtilisateur"]
+              : "non reconue",
+      dateNaissance:
+          data.containsKey("dateDeNaissance") && data["dateDeNaissance"] != null
+              ? data["dateDeNaissance"]
+              : "non reconue",
+      espaces: listDesEspace,
+      favories: listDesFavories,
+      niveau: data.containsKey("niveau") && data["niveau"] != null
+          ? data["niveau"]
+          : "non reconue",
+    );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:ask_in_usthb/pages/secondaires/mes_questions.dart';
 import 'package:flutter/material.dart';
 import '../widgets/inputs/changer_mot_de_passe.dart';
 import '../../models/utilisateur.dart';
@@ -114,6 +115,23 @@ class Profil extends StatelessWidget {
                     color: Colors.lightBlue,
                   ),
                   label: const Text("Changer le mot de passe ")),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 30),
+              child: TextButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              MesQuestions(utilisateur: utilisateur),
+                        ));
+                  },
+                  icon: const Icon(
+                    Icons.question_answer_rounded,
+                    color: Colors.lightBlue,
+                  ),
+                  label: const Text("Mes Questions")),
             ),
           ],
         ),

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Question {
+  String uid;
   String id, espace;
   String titre, corp, nomUtilisateur;
   String date;
@@ -15,7 +16,7 @@ class Question {
 
   Question({
     required this.id,
-    //required this.userId,
+    required this.uid,
     required this.titre,
     required this.corp,
     required this.nomUtilisateur,
@@ -76,6 +77,7 @@ class Question {
       espace: data.containsKey('espace') ? data['espace'] : "sans espace",
       listDesTags: listDesTag,
       vote: data['vote'],
+      uid: data.containsKey("uid") && data['uid'] != null ? data['uid'] : "id",
       //reponses: data.containsKey('reponse')
     );
   }
