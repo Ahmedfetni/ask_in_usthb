@@ -407,7 +407,7 @@ class _CrierCompteState extends State<CrierCompte> {
                         padding: const EdgeInsets.all(8),
                         child: TextButton(
                           onPressed: () async {
-                            if (formKey.currentState!.validate()) {
+                            if (!formKey.currentState!.validate()) {
                               debugPrint(
                                   " la date de naissance est  $dateDeNaissance");
 
