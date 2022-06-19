@@ -54,6 +54,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Ask In USTHB',
         theme: ThemeData(
+            fontFamily: 'Roboto',
             primarySwatch: Colors.lightBlue,
             appBarTheme: const AppBarTheme(
               systemOverlayStyle: SystemUiOverlayStyle(

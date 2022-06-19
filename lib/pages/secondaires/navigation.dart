@@ -1,5 +1,4 @@
 import 'package:ask_in_usthb/services/service_authentification.dart';
-
 import '../widgets/connecter_ou_inscrire.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -140,7 +139,16 @@ class _NavigationState extends State<Navigation> {
                                       color: Color.fromARGB(255, 67, 145, 155),
                                       fontSize: 20),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  showAboutDialog(context: context, children: [
+                                    Wrap(
+                                      children: const [
+                                        Text(
+                                            "Cette application a ete cree avec le but de rendre la communication entre les etudiants plus facile et independate des reseau sociaux c'est notre pfe pour l'annee 2021/2022"),
+                                      ],
+                                    )
+                                  ]);
+                                },
                               ),
                               const SizedBox(
                                 height: 10,
@@ -161,23 +169,6 @@ class _NavigationState extends State<Navigation> {
                                       .read<ServiceAuthentification>()
                                       .deconnexion();
                                 },
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: ListTile(
-                                  onTap: () {},
-                                  leading: const Icon(
-                                    Icons.copyright_rounded,
-                                    color: Color.fromARGB(255, 67, 145, 155),
-                                  ),
-                                  title: const Text(
-                                    "copyright",
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 67, 145, 155),
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
                               ),
                               const SizedBox(
                                 height: 10,
