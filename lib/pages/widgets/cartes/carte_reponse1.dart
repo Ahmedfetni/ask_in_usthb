@@ -1,10 +1,10 @@
-import 'package:ask_in_usthb/pages/widgets/inputs/repondre_a_reponse.dart';
 import '../../../services/service_base_de_donnees.dart';
 import 'package:provider/provider.dart';
 import '../../../models/reponse_degre1.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import '../../../services/service_base_de_donnees.dart';
 
 class CarteReponse extends StatefulWidget {
   final ReponseDegre1 reponse;
@@ -60,13 +60,25 @@ class _CarteReponseState extends State<CarteReponse> {
           children: [
             InkWell(
               onTap: () {
-                debugPrint("une seul tap ");
+                final uid = Provider.of<User?>(context, listen: false)!.uid;
+                // ignore: unnecessary_null_comparison
+                if (uid != null) {
+                  ServiceBaseDeDonnes(uid: uid).mettreAjourVoteReponse(
+                      widget.reponse.idQuestion, 1, widget.reponse.id, true);
+                }
+                //TODO une test pour eviter que l'utilisateur vote plus q'une fois
                 setState(() {
                   widget.reponse.plusVote();
                 });
               },
               onDoubleTap: () {
-                debugPrint("Double tap");
+                final uid = Provider.of<User?>(context, listen: false)!.uid;
+                //TODO une test pour que l'utilisateur ne vote pas plus qu'une fois
+                // ignore: unnecessary_null_comparison
+                if (uid != null) {
+                  ServiceBaseDeDonnes(uid: uid).mettreAjourVoteReponse(
+                      widget.reponse.idQuestion, -1, widget.reponse.id, false);
+                }
                 setState(() {
                   widget.reponse.moinsVote();
                 });
