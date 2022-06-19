@@ -172,9 +172,7 @@ class _ConnexionState extends State<Connexion> {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Login avec succees")));*/
-                              setState(() {
-                                loading = true;
-                              });
+
                               context
                                   .read<ServiceAuthentification>()
                                   .connexion(
@@ -186,6 +184,9 @@ class _ConnexionState extends State<Connexion> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(value)));
                                 }
+                              });
+                              setState(() {
+                                loading = true;
                               });
                             }
                           },

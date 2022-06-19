@@ -412,23 +412,20 @@ class _CrierCompteState extends State<CrierCompte> {
                                   " la date de naissance est  $dateDeNaissance");
 
                               return;
+                            } else {
+                              setState(() {
+                                loading = true;
+                              });
+                              context
+                                  .read<ServiceAuthentification>()
+                                  .inscrire(
+                                      email: email,
+                                      motDePasse: motDePasse,
+                                      nomUtilisateur: nomUtilisateur,
+                                      niveau: niveau!,
+                                      dateDeNaissance: dateDeNaissance)
+                                  .then((value) => Navigator.pop(context));
                             }
-                            setState(() {
-                              loading = true;
-                            });
-                            context
-                                .read<ServiceAuthentification>()
-                                .inscrire(
-                                    email: email,
-                                    motDePasse: motDePasse,
-                                    nomUtilisateur: nomUtilisateur,
-                                    niveau: niveau!,
-                                    dateDeNaissance: dateDeNaissance)
-                                .then((value) => Navigator.pop(context));
-                            /*(value) => Navigator.pop(context)); 
-                      */
-                            /*ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Login avec succees")));*/
                           },
                           style: TextButton.styleFrom(
                             elevation: 2,
