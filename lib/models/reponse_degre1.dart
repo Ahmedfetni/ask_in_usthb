@@ -6,6 +6,7 @@ class ReponseDegre1 {
   String nomUtilisateur, id, idQuestion;
   String text;
   int vote;
+  String uid;
   String date;
   List<ReponseDegre2> reponses;
 
@@ -16,6 +17,7 @@ class ReponseDegre1 {
       required this.text,
       this.vote = 0,
       required this.date,
+      required this.uid,
       this.reponses = const []});
 
   static ReponseDegre1 reponseFromSnapshot(DocumentSnapshot snapshot) {
@@ -37,6 +39,7 @@ class ReponseDegre1 {
           : "auccune date",
       vote: data.containsKey("vote") ? data["vote"] : 0,
       idQuestion: data.containsKey("idQuestion") ? data['idQuestion'] : "",
+      uid: data.containsKey("uid") ? data['uid'] : "",
     );
   }
 

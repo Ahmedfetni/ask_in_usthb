@@ -36,6 +36,40 @@ class ServiceBaseDeDonnes {
     });
   }
 
+  //Ajouter une notfication reponse a une question
+  Future ajouterUneNotifcationQst(String uidQestion, String idQuestion) async {
+    final collectionNotifciation =
+        FirebaseFirestore.instance.collection("notifcation");
+    collectionNotifciation.add({
+      'uidQst': uidQestion,
+      'uidRep': null,
+      'corp': ['Un utilisateur a ajouter une reponse a votre question', ''],
+      'vuParPoserQst': false,
+      'vuParPoseurReponse': false,
+      'idQst': idQuestion,
+      'reponse': false,
+    });
+  }
+
+  //notification
+  Future ajouterUneNotificationRep(
+      String uidQestion, String idQuestion, uidReponse) async {
+    final collectionNotifciation =
+        FirebaseFirestore.instance.collection("notifcation");
+    collectionNotifciation.add({
+      'uidQst': uidQestion,
+      'uidRep': uidReponse,
+      'corp': [
+        'Un utilisateur a ajouter une reponse a une reponse dans votre question',
+        'un utilisateur a ajouter une reponse a votre reponse'
+      ],
+      'vuParPoserQst': false,
+      'vuParPoseurReponse': false,
+      'idQst': idQuestion,
+      'reponse': true,
+    });
+  }
+
   //Pour ajouter un espace a un utilisateur
   Future ajouterEspace(String espace) async {
     final refrence = collectionUtilisateur.doc(uid);
@@ -192,6 +226,7 @@ class ServiceBaseDeDonnes {
   Future ajouterUneRponse1(
     String idQuestion,
     String text,
+    String uidQst,
   ) async {
     final collectionDesRponse1 =
         collectionQuestion.doc(idQuestion).collection("reponses");
@@ -208,6 +243,7 @@ class ServiceBaseDeDonnes {
         }).then((value) {
           return value;
         });
+        await ajouterUneNotifcationQst(uidQst, idQuestion);
       } on FirebaseException catch (e) {
         // Caught an exception from Firebase.
         debugPrint("Failed with error '${e.code}': ${e.message}");
@@ -217,7 +253,12 @@ class ServiceBaseDeDonnes {
 
   //Ajouter une reponse a une reponse
   Future ajouterUneReponse2(
-      String idQuestion, String idReponse, String text) async {
+    String idQuestion,
+    String idReponse,
+    String uidReponse,
+    String uidQst,
+    String text,
+  ) async {
     final collection = collectionQuestion
         .doc(idQuestion)
         .collection("reponses")
@@ -234,6 +275,7 @@ class ServiceBaseDeDonnes {
         'vote': 0,
         'date': FieldValue.serverTimestamp(),
       });
+      await ajouterUneNotificationRep(uidQst, idQuestion, uidReponse);
     } on FirebaseException catch (e) {
       debugPrint("Failed with error '${e.code}': ${e.message}");
     }

@@ -7,12 +7,14 @@ import 'package:intl/intl.dart';
 import '../../../services/service_base_de_donnees.dart';
 
 class CarteReponse extends StatefulWidget {
+  String uidQst;
   final ReponseDegre1 reponse;
   //final Function repondre;
   //final int index;
   CarteReponse({
     Key? key,
     required this.reponse,
+    required this.uidQst,
     //required this.repondre,
   }) : super(key: key);
 
@@ -178,8 +180,12 @@ class _CarteReponseState extends State<CarteReponse> {
                           }
 
                           await ServiceBaseDeDonnes(uid: uid)
-                              .ajouterUneReponse2(widget.reponse.idQuestion,
-                                  widget.reponse.id, value);
+                              .ajouterUneReponse2(
+                                  widget.reponse.idQuestion,
+                                  widget.reponse.id,
+                                  widget.reponse.uid,
+                                  widget.uidQst,
+                                  value);
                         }
                       },
                     ),

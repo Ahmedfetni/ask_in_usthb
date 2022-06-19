@@ -8,7 +8,7 @@ import '../../../models/reponse_degre1.dart';
 import '../../widgets/cartes/carte_reponse2.dart';
 import '../../widgets/cartes/carte_reponse1.dart';
 import '../../widgets/cartes/puce_tag.dart';
-import '../../widgets/inputs/repondre_a_reponse.dart';
+//import '../../widgets/inputs/repondre_a_reponse.dart';
 import 'package:flutter/material.dart';
 import '../../../services/service_base_de_donnees.dart';
 import 'package:provider/provider.dart';
@@ -282,8 +282,8 @@ class _GrandeCarteQuestionState extends State<GrandeCarteQuestion> {
 
                     /*sleep(const Duration(milliseconds: 100));*/
 
-                    await ServiceBaseDeDonnes(uid: uid)
-                        .ajouterUneRponse1(widget.question.getId, value);
+                    await ServiceBaseDeDonnes(uid: uid).ajouterUneRponse1(
+                        widget.question.getId, value, widget.question.uid);
                     setState(() {
                       ajouterUneReponseDegre1 = false;
                     });

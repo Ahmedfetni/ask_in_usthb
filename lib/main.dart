@@ -13,6 +13,7 @@ import 'pages/principales/list_des_espaces.dart';
 import 'package:provider/provider.dart';
 import 'services/service_authentification.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 /* 
   ); */
@@ -191,6 +192,16 @@ class PagePrincipale extends StatefulWidget {
 }
 
 class _PagePrincipaleState extends State<PagePrincipale> {
+  @override
+  void initState() {
+    FirebaseMessaging.instance.getInitialMessage();
+    FirebaseMessaging.onMessage.listen((messsage) {
+      //TODO faire quelque chose avec la notification
+      debugPrint(messsage.notification?.title);
+    });
+    super.initState();
+  }
+
   bool utilisateurConnecter = true;
   int indexDesEcrant = 0;
   bool ajouterTagEstAutoFocus = false;

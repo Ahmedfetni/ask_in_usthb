@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../../models/une_notification.dart';
 
 class CarteNotification extends StatefulWidget {
-  CarteNotification({Key? key}) : super(key: key);
+  UneNotification notif;
+  CarteNotification({Key? key, required this.notif}) : super(key: key);
 
   @override
   State<CarteNotification> createState() => _CarteNotificationState();
@@ -10,19 +12,21 @@ class CarteNotification extends StatefulWidget {
 class _CarteNotificationState extends State<CarteNotification> {
   @override
   Widget build(BuildContext context) {
+    String text =
+        widget.notif.reponse ? widget.notif.corp[1] : widget.notif.corp[0];
     return Card(
       elevation: 1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: ListTile(
         title: Wrap(
-          children: const [
+          children: [
             Text(
-              "une nouvelle notification",
-              style: TextStyle(color: Colors.lightBlue),
+              text,
+              style: const TextStyle(color: Colors.lightBlue),
             ),
           ],
         ),
-        trailing: Icon(Icons.more_vert),
+        trailing: const Icon(Icons.more_vert),
       ),
     );
   }

@@ -10,7 +10,7 @@ import '../../models/reponse_degre1.dart';
 import '../widgets/cartes/carte_reponse2.dart';
 import '../widgets/cartes/carte_reponse1.dart';
 import '../widgets/cartes/puce_tag.dart';
-import '../widgets/inputs/repondre_a_reponse.dart';
+//import '../widgets/inputs/repondre_a_reponse.dart';
 import 'package:flutter/material.dart';
 import '../../services/service_base_de_donnees.dart';
 import 'package:provider/provider.dart';
@@ -112,8 +112,9 @@ class _QuestionDetailState extends State<QuestionDetail> {
             listDesSlivers.add(GrandeCarteQuestion(question: widget.question));
             for (var element in li) {
               listDesSlivers.add(SliverList(
-                  delegate: SliverChildListDelegate(
-                      [CarteReponse(reponse: element)])));
+                  delegate: SliverChildListDelegate([
+                CarteReponse(reponse: element, uidQst: widget.question.uid)
+              ])));
               listDesSlivers.add(ListDesReponse2(reponse1: element));
             }
             return
@@ -168,13 +169,7 @@ class _QuestionDetailState extends State<QuestionDetail> {
   //TODO changer  tous cas a un furure builder
   //creeLesListDesReponse(context) =>
 
-  List<SliverList> _listDesReponses(List<ReponseDegre1> li) {
-    List<SliverList> liSliver = [];
-    int i = 0;
-    for (var reponse in li) {
-      liSliver.add(SliverList(
-          delegate: SliverChildListDelegate([CarteReponse(reponse: reponse)])));
-      /*liSliver.add(SliverList(
+  /*liSliver.add(SliverList(
           delegate: SliverChildListDelegate([
         RepondreAUneReponse(
           visible: rependreVisible[i],
@@ -182,20 +177,7 @@ class _QuestionDetailState extends State<QuestionDetail> {
           index: i,
         )
       ])));*/
-      //List de reponses a une reponse degre 2
-      //TODO Verfier si les reponse existe a une reponse
-      liSliver.add(SliverList(
-        delegate: SliverChildBuilderDelegate(
-          childCount: reponse.getReponses.length, //len des reponses
-          (context, index) => Container(
-            margin: const EdgeInsets.only(left: 30, right: 8),
-            padding: const EdgeInsets.all(8.0),
-            child: CarteReponse2(reponse: reponse.getReponses[index]),
-          ),
-        ),
-      ));
-      i++;
-    }
-    return liSliver;
-  }
+  //List de reponses a une reponse degre 2
+  //TODO Verfier si les reponse existe a une reponse
+
 }
